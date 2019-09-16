@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1568589629 source:c:\users\martin\desktop\hsos\lexical_analysis\files.cpp
+	"files.hpp"
+
+1568589615 c:\users\martin\desktop\hsos\lexical_analysis\files.hpp
+	<stdio.h>
+	<stdlib.h>
+
+1568599277 source:c:\users\martin\desktop\hsos\lexical_analysis\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+
