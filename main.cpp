@@ -73,7 +73,6 @@ void token(){
     }while(EOFF());
         
 }
-
 bool identifier(){
     
     int prior;
