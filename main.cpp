@@ -22,9 +22,12 @@ int main()
     char c;
   
     file_p=fopen("text.txt","r");
+ 
+     //wsp();
+     token();
+ 
     
-    token();
-    //printf("%ld",q);
+    
     fclose(file_p);
     return 0;
 }
@@ -32,36 +35,43 @@ char read(){
     return fgetc(file_p);
 }
 bool EOFF(){
-    if(!feof(file_p)){    
+    if(!feof(file_p)){  
+            full_back();  
         return true;      
     } 
+    full_back();
         return false; 
 }
 
 bool wsp(){  
-        while (isspace(read()))
-        {
-        full_back();
-        sucess();
+        while(isspace(read())){
+                   full_back();
+            sucess();
         return true;
-        }      
-
+         
+        }
+        
+         
+   // printf("{Activated wsp}");
 }
 void sucess(){
     q=ftell(file_p);
+    printf("{Activated sucess %li}",q);
 }
 void fail(){
     fseek(file_p,q,SEEK_SET);
+   
 }
 void full_back(){
     fseek(file_p,-1,SEEK_CUR);
+   
 }
 void token(){
    
-    do{
-       // wsp();
+   do{
+   
            //printf("%i  %c",i,read());
-           
+           wsp();
             //printf("[%d]",identifier());
             if(identifier()){
                 printf(" ID ");
@@ -73,6 +83,7 @@ void token(){
     }while(EOFF());
         
 }
+
 bool identifier(){
     
     int prior;
@@ -81,41 +92,38 @@ bool identifier(){
 
     while(actual!=udef){
         prior=actual;
+         
         c=read();
         printf("%c",c);
         
        printf("[%i,%i]",prior,actual);
-                    /*if(isspace(c)){
-                        //wsp();
-                        full_back();
-                        sucess();
-                        prior=actual=0;
-                    }*/
+          
                     //printf("here");
         switch(actual){
             case 0:
-                    if((c>=97||c<=122)||(c>=65||c<=90)){
+                    if((c>=65||c<=90)||(c>=97||c<=122)){
                         actual=2;
-                    }else if(c=='_'){
+                    }else if(c==95){
                         actual=1;
                     }else{
 
                         actual=udef;
                     }
-
+    
                 break;
             case 1:
-                    if((c>=48||c<=57)||(c=='_')){
+                    if((c>=48||c<=57)||(c==95)){
                         actual=1;
                     }else if((c>=97||c<=122)||(c>=65||c<=90)){
                         actual=2;
                     }else{
                         actual=udef;
                     }
+                     
                 break;
             case 2:
                     
-                    if(((c>=97||c<=122)||(c>=65||c<=90))||(c>=48||c<=57)||(c=='_')){
+                    if(((c>=97||c<=122)||(c>=65||c<=90))||(c>=48||c<=57)||(c==95)){
                         actual=2;
                     }else{
                     actual=udef;
@@ -132,9 +140,9 @@ bool identifier(){
         
     }
     if(prior==2){
-           // full_back();
-         //   sucess();
-            actual=0;
+            full_back();
+            sucess();
+            //actual=0;
 
         //    printf("-%i-",prior);
             return true;
