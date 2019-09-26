@@ -6,16 +6,17 @@ FILE *file_p;
 int udef=-1;
 long q=0;
 
+   
+
 //FUNCTIONS
 bool EOFF();
 char read();
-
+bool wsp();
 bool identifier();
 void fail();
 void sucess();
 void full_back();
 void token();
-bool wsp();
 
 int main()
 {
@@ -25,12 +26,13 @@ int main()
  
      //wsp();
      token();
- 
     
     
+    printf("%i",udef);
     fclose(file_p);
     return 0;
 }
+
 char read(){
     return fgetc(file_p);
 }
@@ -128,6 +130,7 @@ bool identifier(){
                     }else{
                     actual=udef;
                     }
+            default:
                     actual=udef;
                     
 
