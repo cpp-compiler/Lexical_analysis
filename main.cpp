@@ -6,6 +6,8 @@
 FILE *file_p;
 int udef=-1;
 long q=0;
+long p=0;
+long pp=0;
 char get;
 //FUNCTIONS
 bool EOFF();
@@ -24,9 +26,9 @@ char get_letter();
 void set_letter(char);
 char casting(int);
 bool calis();
-
+void open(const char*);
 int main(){
-    file_p=fopen("text.txt","r");
+        open("text.txt");
         do
         {
             //char k=(char)read();
@@ -38,17 +40,18 @@ int main(){
             if(read()=='\0'){
                 printf("end");
             }*/
-            /*wsp();
+
+            wsp();
             if(identifier()){
-                printf("yes");
+                printf("identificator ");
             }else{
-                printf("nop");
-            }*/
-            
-            printf("(%c)",get_letter());
+                printf("nop id");
+            }
+            /*
+            printf("\n(%c)",get_letter());
             if(get_letter()==' '){
                 printf("yes");
-            }/*
+            }*//*
             if(calis()){
                     printf("yes");
             }else{
@@ -68,17 +71,27 @@ bool calis(){
         return false;
     }
 }
+void open(const char* name){
+    file_p=fopen(name,"r");
+    p=-1;
+    q=-1;
+    
+}
 int read(){
         int c;
         signed int aux;
         char word;
+        pp=ftell(file_p);
+        
+        printf("-pos %li-",pp);
+        //fseek(file_p,p,SEEK_SET);
         c=fgetc(file_p);
         aux=c;
     // printf("[{%i}]",c);
     //printf("[%c][%c]",c,aux);
         word=casting(aux);
         set_letter(word);  
-        sucess();
+        
     return c;
 }
 void set_letter(char cyk){
@@ -89,16 +102,18 @@ char get_letter(){
 }
 
 
-void sucess(){ q=ftell(file_p); printf("\n{Activated sucess %li}",q);}
+void sucess(){ q=fseek(file_p,q,SEEK_SET); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
-void full_back(){fseek(file_p,-1,SEEK_CUR);}
+void full_back(){ fseek(file_p,-1,SEEK_CUR);}
 
 bool EOFF(){
     if(read()==EOF){  
-         //  full_back();  
+         //printf("si"); 
+         //full_back();
         return false;      
     }else{
-        //    full_back();
+        //printf("no");
+            //full_back();
         return true; 
 
     }
@@ -115,20 +130,20 @@ bool identifier(){
     int prior;
     int actual=0;
     char c;
-    while(actual!=udef){
+    full_back();
+    while(actual!=udef && EOFF()){
         prior=actual;
         c=get_letter();
        // printf("{id %c}",c);
-        printf("<c[%c] prior[%i] actual[%i]>",c,prior,actual);
+       printf("from id p%liq%li",p,q);
+       printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
         /*if(c=='h'){
             printf("1[YES]");
         }
         if(c==104){
             printf("2[YES]");
         }*/
-        if(c==' '){
-                        printf("yes ");
-                    }
+      
         switch(actual){
 
             case 0:
@@ -163,18 +178,21 @@ bool identifier(){
 
         }
     
-       
         
     }
-     if(prior==2){
-        full_back();
+      if(prior==2){
+        //full_back();
         sucess();
 
         return true;
-    }
-    fail();
+    }else{
+        //full_back();
+        fail();
 
-    return false;
+    return false; 
+            
+    }
+    
        
       
 }
