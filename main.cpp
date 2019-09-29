@@ -27,6 +27,8 @@ void set_letter(char);
 char casting(int);
 bool calis();
 void open(const char*);
+bool udfa();
+int S(int,char);
 int main(){
         open("text.txt");
         do
@@ -42,10 +44,10 @@ int main(){
             }*/
 
             wsp();
-            if(identifier()){
+            if(udfa()){
                 printf("identificator ");
             }else{
-                printf("nop id");
+                printf("ERROR");
             }
             /*
             printf("\n(%c)",get_letter());
@@ -113,7 +115,7 @@ bool EOFF(){
         return false;      
     }else{
         //printf("no");
-            //full_back();
+         //   full_back();
         return true; 
 
     }
@@ -121,10 +123,72 @@ bool EOFF(){
 }
 bool wsp(){
         while(isspace(read()))
-        full_back();
+        //sfull_back();
         sucess();
         
         return true;
+}
+bool udfa(){
+    int actual=0,prior;
+    
+    char c;
+    full_back();
+    while(actual!=udef && EOFF()){
+	    c=get_letter();
+        prior=actual;
+        actual=S(actual,c);
+        if(actual==2){
+            prior=actual;
+        }    
+        
+       // printf("\n[{%c %i %i}]",c,prior,actual);
+    }
+    if(prior==2){
+        //full_back();
+        sucess();
+
+        return true;
+    }else{
+       // full_back();
+        fail();
+
+    return false; 
+            
+    }
+}
+int S(int q,char c){
+    int state=0;
+    switch(q){
+        case 0:
+               
+		    if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
+                        state=2;
+                    }else if(c=='_'){
+                        state=1;
+                    }else{
+                        state=udef;
+                    }
+            break;
+        case 1:
+                
+		    if((c>='0'&& c<='9')||(c=='_')){
+                        state=1;
+                    }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
+                        state=2;
+                    }else{
+                        state=udef;
+                    }
+            break;
+        case 2:
+                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
+                        state=2;
+                    }else{
+                        state=udef;
+                    }
+            break;
+        
+    }
+    return state;
 }
 bool identifier(){
     int prior;
@@ -155,7 +219,7 @@ bool identifier(){
                     }else{
                         actual=udef;
                     }
-
+                printf("here %c %i  %i",c,actual,prior);
                 break;
             case 1:
                     if((c>='0'&& c<='9')||(c=='_')){
@@ -181,12 +245,12 @@ bool identifier(){
         
     }
       if(prior==2){
-        full_back();
+        //full_back();
         sucess();
 
         return true;
     }else{
-        //full_back();
+       // full_back();
         fail();
 
     return false; 
