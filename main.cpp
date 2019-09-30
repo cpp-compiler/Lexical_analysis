@@ -142,14 +142,19 @@ bool udfa(){
 	    c=get_letter();
 
 
-        actual=S(actual,c);
+        b=actual=S(actual,c);
 /*else if(prior==2 && actual==2){
             a=1;
         }*/
 
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
-    }/*
+    }
+    if(b==2){
+            b=0;
+        return true;
+    }
+    /*
     if(b){
 	    return true;
 
@@ -172,38 +177,38 @@ bool udfa(){
     }
 }
 int S(int q,char c){
-    int state=0;
+
     switch(q){
         case 0:
 
 		    if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        state=2;
+                        return 2;
                     }else if(c=='_'){
-                        state=1;
+                        return 1;
                     }else{
-                        state=udef;
+                        return udef;
                     }
             break;
         case 1:
 
 		    if((c>='0'&& c<='9')||(c=='_')){
-                        state=1;
+                        return 1;
                     }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        state=2;
+                        return 2;
                     }else{
-                        state=udef;
+                        return udef;
                     }
             break;
         case 2:
                 if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
-                        state=2;
+                        return 2;
                     }else{
-                        state=udef;
+                        return udef;
                     }
             break;
 
     }
-    return state;
+
 }
 
 
