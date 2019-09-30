@@ -31,6 +31,7 @@ bool udfa();
 int S(int,char);
 int main(){
         open("text.txt");
+        
         do
         {
             //char k=(char)read();
@@ -42,11 +43,12 @@ int main(){
             if(read()=='\0'){
                 printf("end");
             }*/
+            
             wsp();
             if(udfa()){
                 printf("\nidentificator ");
             }else{
-                printf("ERROR");
+                printf("END FILE");
             }
             /*
             wsp();
@@ -83,7 +85,7 @@ void open(const char* name){
     file_p=fopen(name,"r");
     p=-1;
     q=-1;
-    
+    //full_back();
 }
 int read(){
         int c;
@@ -110,18 +112,18 @@ char get_letter(){
 }
 
 
-void sucess(){ q=fseek(file_p,q,SEEK_SET); /*printf("\n{Activated sucess %li}",q);*/}
+void sucess(){ q=fseek(file_p,q,SEEK_SET); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
 void full_back(){ fseek(file_p,-1,SEEK_CUR);}
 
 bool EOFF(){
     if(read()==EOF){  
          //printf("si"); 
-        // full_back();
+         //full_back();
         return false;      
     }else{
         //printf("no");
-        // full_back();
+       //  full_back();
         return true; 
 
     }
@@ -138,6 +140,7 @@ bool udfa(){
     int actual=0,prior;
     bool flag_a;
     char c;
+    int a,b;
     full_back();
     while(actual!=udef && EOFF()){
 	    c=get_letter();
@@ -145,17 +148,23 @@ bool udfa(){
         
         actual=S(actual,c);
       
-        if(prior!=actual){
-            flag_a=true;
-        }else{
-            flag_a=false;
-        }
+       /* if(prior==0 && actual==2){
+            
+            b=1;
+        }else if(prior==2 && actual==2){
+            
+            a=1;
+        }*/
         
-       //printf("\n[{%c %i %i}]",c,prior,actual);
+       printf("\n[{%c %i %i}]",c,prior,actual);
     }
-    if(flag_a){
-        return true;
-    }
+   /* if(b){
+	    return true;        
+	
+    }else if(a){
+        return false;
+    }*/
+    
     if(prior==2){
         
         full_back();
@@ -208,7 +217,7 @@ bool identifier(){
     int prior;
     int actual=0;
     char c;
-    full_back();
+    //full_back();
     while(actual!=udef && EOFF()){
         prior=actual;
         c=get_letter();
@@ -233,7 +242,7 @@ bool identifier(){
                     }else{
                         actual=udef;
                     }
-                printf("here %c %i  %i",c,actual,prior);
+             //   printf("here %c %i  %i",c,actual,prior);
                 break;
             case 1:
                     if((c>='0'&& c<='9')||(c=='_')){
@@ -260,12 +269,12 @@ bool identifier(){
     }
       if(prior==2){
         //full_back();+++++++++++
-        sucess();
+      //  sucess();
 
         return true;
     }else{
        // full_back();
-        fail();
+     //   fail();
 
     return false; 
             
