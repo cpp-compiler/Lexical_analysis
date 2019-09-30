@@ -44,7 +44,7 @@ int main(){
                 printf("end");
             }*/
 
-
+/*
             if(wsp()){
 
                 full_back();
@@ -53,14 +53,17 @@ int main(){
                 printf("\nidentificator ");
             }else{
                 printf("END FILE");
+            }*/
+
+            if(wsp()){
+                full_back();
+                //sucess();
             }
-            /*
-            wsp();
             if(udfa()){
                 printf("\nidentificator ");
             }else{
                 printf("ERROR");
-            }*/
+            }
 /*
             printf("(%c)",get_letter());
             if(get_letter()==' '){
@@ -112,7 +115,7 @@ void full_back(){ fseek(file_p,-1,SEEK_CUR);}
 bool EOFF(){
     if(read()==EOF){
          //printf("si");
-         full_back();
+        // full_back();
         return false;
     }else{
         //printf("no");
@@ -134,29 +137,30 @@ bool udfa(){
     bool flag_a;
     char c;
     int a,b;
-    full_back();
+
     while(actual!=udef && EOFF()){
+        prior=actual;
 	    c=get_letter();
-          prior=actual;
+
 
         actual=S(actual,c);
 
-       /* if(prior==0 && actual==2){
+        if(prior==0 && actual==2){
 
             b=1;
-        }else if(prior==2 && actual==2){
+        }/*else if(prior==2 && actual==2){
 
             a=1;
         }*/
 
        printf("\n[{%c %i %i}]",c,prior,actual);
     }
-   /* if(b){
+    if(b){
 	    return true;
 
-    }else if(a){
+    }else{
         return false;
-    }*/
+    }
 
     if(prior==2){
 
