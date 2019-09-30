@@ -46,7 +46,6 @@ int main(){
 
 /*
             if(wsp()){
-
                 full_back();
             }
             if(identifier()){
@@ -144,23 +143,19 @@ bool udfa(){
 
 
         actual=S(actual,c);
-
-        if(prior==0 && actual==2){
-
-            b=1;
-        }/*else if(prior==2 && actual==2){
-
+/*else if(prior==2 && actual==2){
             a=1;
         }*/
 
-       printf("\n[{%c %i %i}]",c,prior,actual);
-    }
+       printf(" p%li and q%li",p,q);
+       printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
+    }/*
     if(b){
 	    return true;
 
     }else{
         return false;
-    }
+    }*/
 
     if(prior==2){
 
@@ -211,76 +206,7 @@ int S(int q,char c){
     return state;
 }
 
-bool identifier(){
-    int prior;
-    int actual=0;
-    char c;
-    //full_back();
-    while(actual!=udef && EOFF()){
-        prior=actual;
-        c=get_letter();
-       // printf("{id %c}",c);
-       printf("from id p%liq%li",p,q);
-       printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
-        /*if(c=='h'){
-            printf("1[YES]");
-        }
-        if(c==104){
-            printf("2[YES]");
-        }*/
 
-        switch(actual){
-
-            case 0:
-
-                    if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        actual=2;
-                    }else if(c=='_'){
-                        actual=1;
-                    }else{
-                        actual=udef;
-                    }
-             //   printf("here %c %i  %i",c,actual,prior);
-                break;
-            case 1:
-                    if((c>='0'&& c<='9')||(c=='_')){
-                        actual=1;
-                    }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        actual=2;
-                    }else{
-                        actual=udef;
-                    }
-                break;
-            case 2:
-                    if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
-                        actual=2;
-                    }else{
-                        actual=udef;
-                    }
-
-
-                break;
-
-        }
-
-
-    }
-      if(prior==2){
-        full_back();
-        sucess();
-
-        return true;
-    }else{
-       // full_back();
-        fail();
-
-    return false;
-
-    }
-
-
-
-}
 
 char casting(int c){
     switch (c)
@@ -448,8 +374,5 @@ char casting(int c){
             return 'z';
         break;
 
-    default:
-
-        break;
     }
 }
