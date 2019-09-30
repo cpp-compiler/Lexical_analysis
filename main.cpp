@@ -91,7 +91,7 @@ int read(){
         char word;
         pp=ftell(file_p);
         
-       printf("-pos %li-",pp);
+      // printf("-pos %li-",pp);
         //fseek(file_p,p,SEEK_SET);
         c=fgetc(file_p);
         aux=c;
@@ -99,7 +99,7 @@ int read(){
     //printf("[%c][%c]",c,aux);
         word=casting(aux);
         set_letter(word);  
-        
+       
     return c;
 }
 void set_letter(char cyk){
@@ -110,14 +110,14 @@ char get_letter(){
 }
 
 
-void sucess(){ q=fseek(file_p,q,SEEK_SET); printf("\n{Activated sucess %li}",q);}
+void sucess(){ q=fseek(file_p,q,SEEK_SET); /*printf("\n{Activated sucess %li}",q);*/}
 void fail(){fseek(file_p,q,SEEK_SET);}
 void full_back(){ fseek(file_p,-1,SEEK_CUR);}
 
 bool EOFF(){
     if(read()==EOF){  
          //printf("si"); 
-         //full_back();
+        // full_back();
         return false;      
     }else{
         //printf("no");
@@ -136,27 +136,34 @@ bool wsp(){
 }
 bool udfa(){
     int actual=0,prior;
-    
+    bool flag_a;
     char c;
     full_back();
     while(actual!=udef && EOFF()){
 	    c=get_letter();
-        prior=actual;
-        actual=S(actual,c);
-        printf("\n[{%c %i %i}]",c,prior,actual);
-        if(actual==2){
-            prior=actual;
-        }    
+          prior=actual;
         
-       printf("\n[{%c %i %i}]",c,prior,actual);
+        actual=S(actual,c);
+      
+        if(prior!=actual){
+            flag_a=true;
+        }else{
+            flag_a=false;
+        }
+        
+       //printf("\n[{%c %i %i}]",c,prior,actual);
+    }
+    if(flag_a){
+        return true;
     }
     if(prior==2){
+        
         full_back();
         sucess();
 
         return true;
     }else{
-       // full_back();
+       
         fail();
 
     return false; 
