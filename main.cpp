@@ -46,9 +46,8 @@ int main(){
 
 
             if(wsp()){
+
                 full_back();
-            }else{
-                fail();
             }
             if(identifier()){
                 printf("\nidentificator ");
@@ -113,7 +112,7 @@ void full_back(){ fseek(file_p,-1,SEEK_CUR);}
 bool EOFF(){
     if(read()==EOF){
          //printf("si");
-         //full_back();
+         full_back();
         return false;
     }else{
         //printf("no");
@@ -264,7 +263,7 @@ bool identifier(){
     }
       if(prior==2){
         full_back();
-//        sucess();
+        sucess();
 
         return true;
     }else{
