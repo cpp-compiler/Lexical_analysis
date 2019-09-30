@@ -42,13 +42,19 @@ int main(){
             if(read()=='\0'){
                 printf("end");
             }*/
-
             wsp();
             if(udfa()){
-                printf("identificator ");
+                printf("\nidentificator ");
             }else{
                 printf("ERROR");
             }
+            /*
+            wsp();
+            if(udfa()){
+                printf("\nidentificator ");
+            }else{
+                printf("ERROR");
+            }*/
             /*
             printf("\n(%c)",get_letter());
             if(get_letter()==' '){
@@ -85,11 +91,11 @@ int read(){
         char word;
         pp=ftell(file_p);
         
-        printf("-pos %li-",pp);
+       printf("-pos %li-",pp);
         //fseek(file_p,p,SEEK_SET);
         c=fgetc(file_p);
         aux=c;
-    // printf("[{%i}]",c);
+     //printf("[{%i}]",c);
     //printf("[%c][%c]",c,aux);
         word=casting(aux);
         set_letter(word);  
@@ -115,7 +121,7 @@ bool EOFF(){
         return false;      
     }else{
         //printf("no");
-         //   full_back();
+        // full_back();
         return true; 
 
     }
@@ -123,7 +129,7 @@ bool EOFF(){
 }
 bool wsp(){
         while(isspace(read()))
-        //sfull_back();
+        full_back();
         sucess();
         
         return true;
@@ -137,14 +143,15 @@ bool udfa(){
 	    c=get_letter();
         prior=actual;
         actual=S(actual,c);
+        printf("\n[{%c %i %i}]",c,prior,actual);
         if(actual==2){
             prior=actual;
         }    
         
-       // printf("\n[{%c %i %i}]",c,prior,actual);
+       printf("\n[{%c %i %i}]",c,prior,actual);
     }
     if(prior==2){
-        //full_back();
+        full_back();
         sucess();
 
         return true;
@@ -245,7 +252,7 @@ bool identifier(){
         
     }
       if(prior==2){
-        //full_back();
+        //full_back();+++++++++++
         sucess();
 
         return true;
@@ -269,6 +276,85 @@ char casting(int c){
     case 32:
             return ' ';
         break;
+    case 65:
+            return 'A';
+        break;
+    case 66:
+            return 'B';
+        break;
+    case 67:
+            return 'C';
+        break;
+    case 68:
+            return 'D';
+        break;
+    case 69:
+            return 'E';
+        break;
+    case 70:
+            return 'F';
+        break;
+    case 71:
+            return 'G';
+        break;
+    case 72:
+            return 'H';
+        break;
+    case 73:
+            return 'I';
+        break;
+    case 74:
+            return 'J';
+        break;
+    case 75:
+            return 'K';
+        break;
+    case 76:
+            return 'L';
+        break;
+    case 77:
+            return 'M';
+        break;
+    case 78: 
+            return 'N';
+        break;
+    case 79:
+            return 'O';
+        break;
+    case 80:
+            return 'P';
+        break;
+    case 81:
+            return 'Q';
+        break;
+    case 82:
+            return 'R';
+        break;
+    case 83:
+            return 'S';
+        break;
+    case 84:
+            return 'T';
+        break;
+    case 85:
+            return 'U';
+        break;
+    case 86:
+            return 'V';
+        break;
+    case 87:
+            return 'W';
+        break;
+    case 88:
+            return 'X';
+        break;
+    case 89:
+            return 'Y';
+        break;
+    case 90:
+            return 'Z';
+        break;
+        
     case 97:
             return 'a';
         break;
