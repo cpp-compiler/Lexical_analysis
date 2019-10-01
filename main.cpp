@@ -87,7 +87,7 @@ int read(){
         signed int aux;
         char word;
         pp=ftell(file_p);
-
+        p=pp;
        printf("\n-pos %li-",pp);
         //fseek(file_p,p,SEEK_SET);
         c=fgetc(file_p);
@@ -107,7 +107,7 @@ char get_letter(){
 }
 
 
-void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
+void sucess(){q=p; q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
 void full_back(){ fseek(file_p,-1,SEEK_CUR);}
 
