@@ -22,13 +22,16 @@ void full_back();
 void token();
 
 char w;
+char w1;
 char get_letter();
 void set_letter(char);
+
 char casting(int);
-bool calis();
 void open(const char*);
 bool udfa();
+bool reserved_word();
 int S(int,char);
+
 int main(){
         open("text.txt");
 
@@ -60,11 +63,15 @@ int main(){
             }
             if(udfa()){
                 printf("\nidentificator ");
+            }
+             if(reserved_word()){
+                printf("\nReserved word ");
             }else{
                 printf("ERROR");
             }
+
 /*
-            printf("(%c)",get_letter());
+
             if(get_letter()==' '){
                 printf("yes");
             }*//*
@@ -157,7 +164,6 @@ bool udfa(){
     /*
     if(b){
 	    return true;
-
     }else{
         return false;
     }*/
@@ -212,7 +218,80 @@ int S(int q,char c){
 }
 
 
+bool reserved_word(){
+    int state=0;
+    char c;
+    while(state!=udef){
+            c=get_letter();
+            printf("\t{state[%i]c[%c]}",state,c);
+        switch(state){
 
+            case 0:
+                if(c=='i'){//i
+                  state=1;
+                }else{
+                  state=udef;
+                }
+                break;
+            case 1:
+                if(c=='d'){//d
+                    state=2;
+                }else{
+                    state=udef;
+                }
+                break;
+            case 2:
+                if(c=='e'){//e
+                    state=3;
+                }else{
+                    state=udef;
+                }
+                break;
+            case 3:
+                if(c=='n'){//n
+                    state=4;
+                }else{
+                    state=udef;
+                }
+                break;
+            case 4:
+                if(c=='t'){//t
+                    state=5;
+                }else{
+                    state=udef;
+                }
+                break;
+            case 5:
+                if(c=='i'){//i
+                    state=6;
+                }else{
+                    state=udef;
+                }
+                break;
+            case 6:
+                if(c=='t'){//t
+                    state=7;
+                }else{
+                    state=udef;
+                }
+                break;
+            case 7:
+                if(c=='y'){//y
+                    state=8;
+                }else{
+                    state=udef;
+                }
+        }
+    }
+    if(state==8){
+        return true;
+    }else{
+        return false;
+    }
+
+
+
+}
 char casting(int c){
     switch (c)
     {
