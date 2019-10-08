@@ -8,86 +8,60 @@ int udef=-1;
 long q=0;
 long p=0;
 long pp=0;
-char get;
+char w;
+char a;
 //FUNCTIONS
 bool EOFF();
 int read();
-
-
 bool wsp();
-bool identifier();
 void fail();
 void sucess();
 void full_back();
-void token();
-
-char w;
-char w1;
+int token();
 char get_letter();
 void set_letter(char);
-
+char get_letter1();
+void set_letter1(char);
 char casting(int);
 void open(const char*);
 bool udfa();
-bool reserved_word();
 int S(int,char);
+bool reserved_words();
+int Srw(int,char);
 
+void tokeen();
 int main(){
         open("text.txt");
-
         do
         {
-            //char k=(char)read();
-            //printf("%c",k);
-
-            /*if(read()=='\n'){
-                printf("JUMP");
-            }*//*
-            if(read()=='\0'){
-                printf("end");
-            }*/
-
-/*
-            if(wsp()){
-                full_back();
+            switch(token()){
+                case 1: printf("Identificator");break;
+                case 2: printf("reserved word");
+                break;
             }
-            if(identifier()){
-                printf("\nidentificator ");
-            }else{
-                printf("END FILE");
-            }*/
+
+        } while (EOFF());
+    return 0;
+}
+
+int token(){
+           w=get_letter();
 
             if(wsp()){
                 full_back();
                 //sucess();
             }
             if(udfa()){
-                printf("\nidentificator ");
+                return 1;
             }
-             if(reserved_word()){
-                printf("\nReserved word ");
+            if(reserved_words()){
+                return 2;
             }else{
                 printf("ERROR");
             }
-
-/*
-
-            if(get_letter()==' '){
-                printf("yes");
-            }*//*
-            if(calis()){
-                    printf("yes");
-            }else{
-                printf("nope");
-            }*/
-        } while (EOFF());
-
-    return 0;
 }
-
-
-void open(const char* name){
-    file_p=fopen(name,"r");
+char gotten(){
+    return get_letter();
 }
 int read(){
         int c;
@@ -106,13 +80,12 @@ int read(){
 
     return c;
 }
-void set_letter(char cyk){
-     w=cyk;
-}
-char get_letter(){
-    return w;
-}
+void open(const char* name){ file_p=fopen(name,"r");}
+void set_letter(char cyk){ w=cyk; }
+char get_letter(){ return w; }
 
+void set_letter1(char k){ a=k; }
+char get_letter1(){ return a; }
 
 void sucess(){q=p; q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
@@ -127,15 +100,12 @@ bool EOFF(){
         //printf("no");
        //  full_back();
         return true;
-
     }
-
 }
 bool wsp(){
         while(isspace(read()))
         full_back();
         sucess();
-
         return true;
 }
 bool udfa(){
@@ -147,12 +117,8 @@ bool udfa(){
     while(actual!=udef && EOFF()){
         prior=actual;
 	    c=get_letter();
-
-
+        set_letter1(c);
         b=actual=S(actual,c);
-/*else if(prior==2 && actual==2){
-            a=1;
-        }*/
 
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
@@ -161,25 +127,14 @@ bool udfa(){
             b=0;
         return true;
     }
-    /*
-    if(b){
-	    return true;
-    }else{
-        return false;
-    }*/
 
     if(prior==2){
-
         full_back();
         sucess();
-
         return true;
     }else{
-
         fail();
-
-    return false;
-
+        return false;
     }
 }
 int S(int q,char c){
@@ -212,86 +167,78 @@ int S(int q,char c){
                         return udef;
                     }
             break;
-
+    }
+}
+bool reserved_words(){
+    int actual=0,prior;
+    char c;
+    while(actual!=udef){
+        prior=actual;
+	   c=get_letter1();
+        actual=Srw(actual,c);
+        printf("{RW c[%c]prior[%i]actual[%i]}",c,prior,actual);
+      // printf(" p%li and q%li",p,q);
+    //   printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
     }
 
+
+    if(prior==8){
+        return true;
+    }else{
+
+        return false;
+    }
 }
-
-
-bool reserved_word(){
-    int state=0;
-    char c;
-    while(state!=udef){
-            c=get_letter();
-            printf("\t{state[%i]c[%c]}",state,c);
-        switch(state){
+int Srw(int q,char c){
+    switch(q){
 
             case 0:
                 if(c=='i'){//i
-                  state=1;
-                }else{
-                  state=udef;
+                  return 1;
                 }
                 break;
             case 1:
                 if(c=='d'){//d
-                    state=2;
-                }else{
-                    state=udef;
+                    return 2;
                 }
                 break;
             case 2:
                 if(c=='e'){//e
-                    state=3;
-                }else{
-                    state=udef;
+                    return 3;
                 }
                 break;
             case 3:
                 if(c=='n'){//n
-                    state=4;
-                }else{
-                    state=udef;
+                    return 4;
                 }
                 break;
             case 4:
                 if(c=='t'){//t
-                    state=5;
-                }else{
-                    state=udef;
+                    return 5;
                 }
                 break;
             case 5:
                 if(c=='i'){//i
-                    state=6;
-                }else{
-                    state=udef;
+                    return 6;
                 }
                 break;
             case 6:
                 if(c=='t'){//t
-                    state=7;
-                }else{
-                    state=udef;
+                    return 7;
                 }
                 break;
             case 7:
                 if(c=='y'){//y
-                    state=8;
-                }else{
-                    state=udef;
+                    return 8;
                 }
+                break;
+            case 8:
+                return 8;
+                break;
         }
-    }
-    if(state==8){
-        return true;
-    }else{
-        return false;
-    }
-
-
-
+        return udef;
 }
+
 char casting(int c){
     switch (c)
     {
