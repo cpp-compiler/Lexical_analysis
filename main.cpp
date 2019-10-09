@@ -24,11 +24,12 @@ char get_letter1();
 void set_letter1(char);
 char casting(int);
 void open(const char*);
-bool udfa();
+int udfa();
 int S(int,char);
 bool reserved_words();
 int Srw(int,char);
-
+char rw[]={'i','d','e','n','t','i','t','y'};
+int res[7];
 void tokeen();
 int main(){
         open("text.txt");
@@ -45,16 +46,15 @@ int main(){
 }
 
 int token(){
-           w=get_letter();
+          // w=get_letter();
 
             if(wsp()){
                 full_back();
                 //sucess();
             }
-            if(udfa()){
+            if(udfa()==1){
                 return 1;
-            }
-            if(reserved_words()){
+            }else if(udfa()==2){
                 return 2;
             }else{
                 printf("ERROR");
@@ -108,7 +108,7 @@ bool wsp(){
         sucess();
         return true;
 }
-bool udfa(){
+int udfa(){
     int actual=0,prior;
     bool flag_a;
     char c;
@@ -117,56 +117,219 @@ bool udfa(){
     while(actual!=udef && EOFF()){
         prior=actual;
 	    c=get_letter();
-        set_letter1(c);
+       // set_letter1(c);
         b=actual=S(actual,c);
 
        printf(" p%li and q%li",p,q);
+       for(int i=0;i<7;i++){
+            if(rw[i]==c){
+                res[i]=1;
+                printf("yes");
+            }else{
+                res[i]=0;
+                printf("no");
+            }
+       }
        printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
     }
-    if(b==2){
+    for(int k=0;k<7;k++){
+        if(res[k]==1){
+            return 2;
+        }else{
+
+        }
+    }
+    if(b==3){
             b=0;
-        return true;
+        return 1;
+    }
+    printf("\nOUTSIDE c[%c] prior[%i] actual[%i]>",c,prior,actual);
+    if(prior==12||prior==22||prior==28){
+        return 2;
     }
 
-    if(prior==2){
+    if(prior==3){
         full_back();
         sucess();
-        return true;
+        return 1;
     }else{
         fail();
-        return false;
+        return 0;
     }
 }
 int S(int q,char c){
 
-    switch(q){
+    	switch(q){
         case 0:
 
 		    if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        return 2;
-                    }else if(c=='_'){
-                        return 1;
+                        return 3;
                     }else{
                         return udef;
                     }
-            break;
-        case 1:
-
-		    if((c>='0'&& c<='9')||(c=='_')){
-                        return 1;
-                    }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
+                    if(c=='_'){
                         return 2;
+                    }else{
+                        return udef;
+                    }
+                    if(c=='i'){
+                    	return 5;
+                    }else{
+                        return udef;
+                    }
+                    if(c=='t'){
+                    	return 13;
                     }else{
                         return udef;
                     }
             break;
         case 2:
-                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
+
+		    if((c>='0'&& c<='9')||(c=='_')){
                         return 2;
+                    }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
+                        return 3;
                     }else{
                         return udef;
                     }
             break;
+        case 3:
+                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')||(c==39)){
+                        return 3;
+                    }else{
+                        return udef;
+                    }
+            break;
+        case 5:
+        		if(c=='d'){
+        			return 6;
+        		}else{
+        			return udef;
+        		}
+        	break;
+        case 6:
+        		if(c=='e'){
+        			return 7;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 7:
+        		if(c=='n'){
+        			return 8;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 8:
+        		if(c=='t'){
+        			return 9;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 9:
+        		if(c=='i'){
+        			return 10;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 10:
+        		if(c=='t'){
+        			return 11;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 11:
+        		if(c=='y'){
+        			return 12;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 13:
+        		if(c=='r'){
+        			return 15;
+        		}else{
+        			return udef;
+        		}
+        		if(c=='h'){
+        			return 25;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 15:
+        		if(c=='a'){
+        			return 16;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 16:
+        		if(c=='n'){
+        			return 17;
+        		}else{
+        			return udef;
+        		}
+        case 17:
+        		if(c=='s'){
+        			return 18;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 18:
+        		if(c=='p'){
+        			return 19;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 19:
+        		if(c=='o'){
+        			return 20;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 20:
+        		if(c=='s'){
+        			return 21;
+        		}else{
+        			return udef;
+        		}
+        		break;
+        case 21:
+        		if(c=='e'){
+        			return 22;
+        		}else{
+        			return udef;
+        		}
+        		break;
+       	case 25:
+       			if(c=='r'){
+       				return 26;
+       			}else{
+       				return udef;
+       			}
+       			break;
+       	case 26:
+       			if(c=='o'){
+       				return 27;
+       			}else{
+       				return udef;
+       			}
+       			break;
+       	case 27:
+       			if(c=='w'){
+       				return 28;
+       			}else{
+       				return udef;
+       			}
+       			break;
     }
 }
 bool reserved_words(){
