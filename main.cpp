@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -7,7 +8,7 @@ FILE *file_p;
 int udef=-1;
 long q=0;
 long p=0;
-
+int aux0,aux1,aux2,aux3,aux4,aux5,aux6,aux7;
 char w;
 char a;
 //FUNCTIONS
@@ -127,7 +128,6 @@ int udfa(){
     bool flag_a;
     char c;
     int a,b;
-    int resa,resb;
     int i=0;
     int len,len2;
     while(actual!=udef && EOFF()){
@@ -139,33 +139,7 @@ int udfa(){
         i+=1;
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
-       len=length(get);
-            printf("longi%i",len);
-            if(len==8){
-               char aux[len];
-                    for(int i=0;i<=len;i++){
-                        aux[i]=get[i];
-                    }
-                    int it=0;
-                    int prior1;
-                    int state1=0;
-                    while(state1!=udef){
-                        prior1=state1;
-                        state1=Srw(prior1,aux[it]);
 
-
-                        printf("\n prior1[%i] state1[%i]>",prior1,state1);
-                        i++;
-                    }
-                    if(prior1==8){
-                        resa=2;
-                    }else{
-                        resb=1;
-                    }
-
-            }else{
-                resb=1;
-            }
     }/*
     for(int i=0;i<30;i++){
           printf("{%c,%c}",get[i],word1[i]);
@@ -175,13 +149,68 @@ int udfa(){
                 //full_back();
             //sucess();
             /*len=length(get);
-
             printf("longi%i",len);
             return 1;*/
-            if(resa==2){
-                return 2;
-            }
-            if(resb==1){
+            len=length(get);
+            printf("longi%i",len);
+            if(len==8){
+               char aux[len];
+                    for(int i=0;i<=len;i++){
+                        aux[i]=get[i];
+                        //printf("{%i %c}",i,aux[i]);
+                    }
+
+                    if(aux[0]==word1[0]){
+                        aux0=1;
+                    }else{
+                        aux0=0;
+                    }
+                    if(aux[1]==word1[1]){
+                        aux1=1;
+                    }else{
+                        aux1=0;
+                    }
+                    if(aux[2]==word1[2]){
+                        aux2=1;
+                    }else{
+                        aux2=0;
+                    }
+                    if(aux[3]==word1[3]){
+                        aux3=1;
+                    }else{
+                        aux3=0;
+                    }
+                    if(aux[3]==word1[3]){
+                        aux3=1;
+                    }else{
+                        aux3=0;
+                    }
+                    if(aux[4]==word1[4]){
+                        aux4=1;
+                    }else{
+                        aux4=0;
+                    }
+                    if(aux[5]==word1[5]){
+                        aux5=1;
+                    }else{
+                        aux5=0;
+                    }
+                    if(aux[6]==word1[6]){
+                        aux6=1;
+                    }else{
+                        aux6=0;
+                    }
+                    if(aux[7]==word1[7]){
+                        aux7=1;
+                    }else{
+                        aux7=0;
+                    }
+                    if((aux0&&aux1&&aux2&&aux3&&aux3&&aux4&&aux5&&aux6&&aux7)==1){
+                        return 2;
+                    }else{
+                        return 1;
+                    }
+            }else{
                 return 1;
             }
             /*
@@ -193,8 +222,6 @@ int udfa(){
             //return 2;
             /*
             for(int i=0;i<30;i++){
-
-
                 if(get[i]==word1[i]){
                     return 2;
                 }else if(get[i]!=word1[i]){
@@ -217,7 +244,6 @@ int udfa(){
                 return 1;
             }
         }
-
         b=0;
     }*/
 
