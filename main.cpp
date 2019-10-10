@@ -28,8 +28,9 @@ int udfa();
 int S(int,char);
 bool reserved_words();
 int Srw(int,char);
-char word1[]={'i','d','e','n','t','k','t','y',32};
+char word1[]={'i','d','e','n','t','i','t','y'};
 char get[30];
+int length(char[]);
 
 int main(){
         open("text.txt");
@@ -87,7 +88,7 @@ char get_letter(){ return w; }
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
 void full_back(){ fseek(file_p,-1,SEEK_CUR);}
-
+int Srw(int,char);
 bool EOFF(){
     if(read()==EOF){
 
@@ -107,12 +108,28 @@ bool wsp(){
         sucess();
         return true;
 }
+int length(char c[]){
+int i=0;
+    while(c[i]!='\0'){
+        i++;
+    }
+    return i;
+}
+int length1(char c[]){
+int i=0;
+    while(c[i]!='\0'){
+        i++;
+    }
+    return i;
+}
 int udfa(){
     int actual=0,prior;
     bool flag_a;
     char c;
     int a,b;
+    int resa,resb;
     int i=0;
+    int len,len2;
     while(actual!=udef && EOFF()){
         prior=actual;
 	    c=get_letter();
@@ -122,26 +139,76 @@ int udfa(){
         i+=1;
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
-    }
+       len=length(get);
+            printf("longi%i",len);
+            if(len==8){
+               char aux[len];
+                    for(int i=0;i<=len;i++){
+                        aux[i]=get[i];
+                    }
+                    int it=0;
+                    int prior1;
+                    int state1=0;
+                    while(state1!=udef){
+                        prior1=state1;
+                        state1=Srw(prior1,aux[it]);
+
+
+                        printf("\n prior1[%i] state1[%i]>",prior1,state1);
+                        i++;
+                    }
+                    if(prior1==8){
+                        resa=2;
+                    }else{
+                        resb=1;
+                    }
+
+            }else{
+                resb=1;
+            }
+    }/*
     for(int i=0;i<30;i++){
-           /// printf("%c",get[i]);
-        }
+          printf("{%c,%c}",get[i],word1[i]);
+        }*/
+
         if(b==2){
                 //full_back();
             //sucess();
+            /*len=length(get);
+
+            printf("longi%i",len);
+            return 1;*/
+            if(resa==2){
+                return 2;
+            }
+            if(resb==1){
+                return 1;
+            }
+            /*
+            for(int i=0;i<len;i++){
+                printf("{%c,%c}",aux[i],word1[i]);
+            }*/
+
+
+            //return 2;
+            /*
             for(int i=0;i<30;i++){
+
+
                 if(get[i]==word1[i]){
                     return 2;
                 }else if(get[i]!=word1[i]){
                     return 1;
                 }
             }
+            int
+            while()*/
 
-        }
+        }/*
         for(int i=0;i<30;i++){
             get[i]=' ';
             printf("%c",get[i]);
-        }
+        }*/
     /*if(b==2){
         for(int i=0;i<30;i++){
             if(get[i]==word1[i]){
@@ -213,7 +280,70 @@ int S(int q,char c){
 
     }
 }
+int Srw(int q,char c){
+    switch(q){
 
+            case 0:
+                if(c=='i'){//i
+                  return 1;
+                }else{
+                    return udef;
+                }
+                break;
+            case 1:
+                if(c=='d'){//d
+                    return 2;
+                }else{
+                    return udef;
+                }
+                break;
+            case 2:
+                if(c=='e'){//e
+                    return 3;
+                }else{
+                    return udef;
+                }
+                break;
+            case 3:
+                if(c=='n'){//n
+                    return 4;
+                }else{
+                    return udef;
+                }
+                break;
+            case 4:
+                if(c=='t'){//t
+                    return 5;
+                }else{
+                    return udef;
+                }
+                break;
+            case 5:
+                if(c=='i'){//i
+                    return 6;
+                }else{
+                    return udef;
+                }
+                break;
+            case 6:
+                if(c=='t'){//t
+                    return 7;
+                }else{
+                    return udef;
+                }
+                break;
+            case 7:
+                if(c=='y'){//y
+                    return 8;
+                }else{
+                    return udef;
+                }
+                break;
+
+
+        }
+
+}
 
 char casting(int c){
     switch (c)
