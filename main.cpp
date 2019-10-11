@@ -8,9 +8,8 @@ FILE *file_p;
 int udef=-1;
 long q=0;
 long p=0;
-int aux0,aux1,aux2,aux3,aux4,aux5,aux6,aux7;
 char w;
-char a;
+int aux0,aux1,aux2,aux3,aux4,aux5,aux6,aux7;
 //FUNCTIONS
 bool EOFF();
 int read();
@@ -21,14 +20,10 @@ void full_back();
 int token();
 char get_letter();
 void set_letter(char);
-char get_letter1();
-void set_letter1(char);
 char casting(int);
 void open(const char*);
 int udfa();
 int S(int,char);
-bool reserved_words();
-int Srw(int,char);
 char word1[]={'i','d','e','n','t','i','t','y'};
 char get[30];
 int length(char[]);
@@ -51,9 +46,12 @@ int token(){
 
 
             if(wsp()){
+                    full_back();
                 full_back();
                 sucess();
             }
+
+
             if(udfa()==1){
                 return 1;
             }
@@ -89,36 +87,32 @@ char get_letter(){ return w; }
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
 void full_back(){ fseek(file_p,-1,SEEK_CUR);}
-int Srw(int,char);
 bool EOFF(){
     if(read()==EOF){
 
-         //printf("si");
-       // full_back();
+         printf(" si ");
+        //full_back();
+
+        //sucess();
         return false;
-    }
-        //printf("no");
+    }else{
+            printf(" no ");
         // full_back();
         //sucess();
         return true;
+
+    }
 
 }
 bool wsp(){
         while(isspace(read()))
         full_back();
-        sucess();
+        //sucess();
         return true;
 }
 int length(char c[]){
 int i=0;
-    while(c[i]!='\0'){
-        i++;
-    }
-    return i;
-}
-int length1(char c[]){
-int i=0;
-    while(c[i]!='\0'){
+    while(c[i]!='\0'&&c[i]!=' '){
         i++;
     }
     return i;
@@ -130,7 +124,7 @@ int udfa(){
     int a,b;
     int i=0;
     int len,len2;
-    while(actual!=udef && EOFF()){
+    while(actual!=udef&& EOFF()){
         prior=actual;
 	    c=get_letter();
 
@@ -144,21 +138,25 @@ int udfa(){
     for(int i=0;i<30;i++){
           printf("{%c,%c}",get[i],word1[i]);
         }*/
-
+/*
         if(b==2){
-                //full_back();
-            //sucess();
-            /*len=length(get);
-            printf("longi%i",len);
-            return 1;*/
-            len=length(get);
+
+        }*/
+
+    if(prior==2){
+
+
+
+        len=length(get);
             printf("longi%i",len);
             if(len==8){
+
                char aux[len];
                     for(int i=0;i<=len;i++){
                         aux[i]=get[i];
                         //printf("{%i %c}",i,aux[i]);
                     }
+
 
                     if(aux[0]==word1[0]){
                         aux0=1;
@@ -213,57 +211,11 @@ int udfa(){
             }else{
                 return 1;
             }
-            /*
-            for(int i=0;i<len;i++){
-                printf("{%c,%c}",aux[i],word1[i]);
-            }*/
 
 
-            //return 2;
-            /*
-            for(int i=0;i<30;i++){
-                if(get[i]==word1[i]){
-                    return 2;
-                }else if(get[i]!=word1[i]){
-                    return 1;
-                }
-            }
-            int
-            while()*/
 
-        }/*
-        for(int i=0;i<30;i++){
-            get[i]=' ';
-            printf("%c",get[i]);
-        }*/
-    /*if(b==2){
-        for(int i=0;i<30;i++){
-            if(get[i]==word1[i]){
-                return 2;
-            }else if(get[i]!=word1[i]){
-                return 1;
-            }
-        }
-        b=0;
-    }*/
-
-    if(prior==2){
         full_back();
         sucess();
-         for(int i=0;i<30;i++){
-            if(get[i]==word1[i]){
-
-                return 2;
-            }else if(get[i]!=word1[i]){
-
-                return 1;
-            }
-
-        }
-        for(int i=0;i<30;i++){
-            get[i]=' ';
-           // printf("%c",get[i]);
-        }
 
     }else{
 
@@ -305,70 +257,6 @@ int S(int q,char c){
             break;
 
     }
-}
-int Srw(int q,char c){
-    switch(q){
-
-            case 0:
-                if(c=='i'){//i
-                  return 1;
-                }else{
-                    return udef;
-                }
-                break;
-            case 1:
-                if(c=='d'){//d
-                    return 2;
-                }else{
-                    return udef;
-                }
-                break;
-            case 2:
-                if(c=='e'){//e
-                    return 3;
-                }else{
-                    return udef;
-                }
-                break;
-            case 3:
-                if(c=='n'){//n
-                    return 4;
-                }else{
-                    return udef;
-                }
-                break;
-            case 4:
-                if(c=='t'){//t
-                    return 5;
-                }else{
-                    return udef;
-                }
-                break;
-            case 5:
-                if(c=='i'){//i
-                    return 6;
-                }else{
-                    return udef;
-                }
-                break;
-            case 6:
-                if(c=='t'){//t
-                    return 7;
-                }else{
-                    return udef;
-                }
-                break;
-            case 7:
-                if(c=='y'){//y
-                    return 8;
-                }else{
-                    return udef;
-                }
-                break;
-
-
-        }
-
 }
 
 char casting(int c){
