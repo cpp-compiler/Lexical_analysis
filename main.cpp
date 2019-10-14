@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -8,8 +7,9 @@ FILE *file_p;
 int udef=-1;
 long q=0;
 long p=0;
+
 char w;
-int aux0,aux1,aux2,aux3,aux4,aux5,aux6,aux7;
+char a;
 //FUNCTIONS
 bool EOFF();
 int read();
@@ -20,14 +20,17 @@ void full_back();
 int token();
 char get_letter();
 void set_letter(char);
+char get_letter1();
+void set_letter1(char);
 char casting(int);
 void open(const char*);
 int udfa();
 int S(int,char);
+bool reserved_words();
+int Srw(int,char);
 char word1[]={'i','d','e','n','t','i','t','y'};
 char get[30];
 int length(char[]);
-
 int main(){
         open("text.txt");
         do
@@ -46,12 +49,9 @@ int token(){
 
 
             if(wsp()){
-                    full_back();
                 full_back();
                 sucess();
             }
-
-
             if(udfa()==1){
                 return 1;
             }
@@ -87,35 +87,25 @@ char get_letter(){ return w; }
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){fseek(file_p,q,SEEK_SET);}
 void full_back(){ fseek(file_p,-1,SEEK_CUR);}
+
 bool EOFF(){
     if(read()==EOF){
 
-         printf(" si ");
-        //full_back();
-
-        //sucess();
+         //printf("si");
+       // full_back();
         return false;
-    }else{
-            printf(" no ");
+    }
+        //printf("no");
         // full_back();
         //sucess();
         return true;
-
-    }
 
 }
 bool wsp(){
         while(isspace(read()))
         full_back();
-        //sucess();
+        sucess();
         return true;
-}
-int length(char c[]){
-int i=0;
-    while(c[i]!='\0'&&c[i]!=' '){
-        i++;
-    }
-    return i;
 }
 int udfa(){
     int actual=0,prior;
@@ -123,8 +113,7 @@ int udfa(){
     char c;
     int a,b;
     int i=0;
-    int len,len2;
-    while(actual!=udef&& EOFF()){
+    while(actual!=udef && EOFF()){
         prior=actual;
 	    c=get_letter();
 
@@ -133,89 +122,44 @@ int udfa(){
         i+=1;
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
-
-    }/*
+    }
     for(int i=0;i<30;i++){
-          printf("{%c,%c}",get[i],word1[i]);
-        }*/
-/*
+           // printf("%c",get[i]);
+        }
         if(b==2){
+                //full_back();
+            //sucess();
+            for(int i=0;i<30;i++){
+                if(get[i]==word1[i]){
+                    return 2;
+                }else if(get[i]!=word1[i]){
+                    return 1;
+                }
+            }
 
-        }*/
+        }
+        for(int i=0;i<30;i++){
+            get[i]=' ';
+            printf("%c",get[i]);
+        }
 
     if(prior==2){
+        full_back();
+        sucess();
+         for(int i=0;i<30;i++){
+            if(get[i]==word1[i]){
 
+                return 2;
+            }else if(get[i]!=word1[i]){
 
-
-        len=length(get);
-            printf("longi%i",len);
-            if(len==8){
-
-               char aux[len];
-                    for(int i=0;i<=len;i++){
-                        aux[i]=get[i];
-                        //printf("{%i %c}",i,aux[i]);
-                    }
-
-
-                    if(aux[0]==word1[0]){
-                        aux0=1;
-                    }else{
-                        aux0=0;
-                    }
-                    if(aux[1]==word1[1]){
-                        aux1=1;
-                    }else{
-                        aux1=0;
-                    }
-                    if(aux[2]==word1[2]){
-                        aux2=1;
-                    }else{
-                        aux2=0;
-                    }
-                    if(aux[3]==word1[3]){
-                        aux3=1;
-                    }else{
-                        aux3=0;
-                    }
-                    if(aux[3]==word1[3]){
-                        aux3=1;
-                    }else{
-                        aux3=0;
-                    }
-                    if(aux[4]==word1[4]){
-                        aux4=1;
-                    }else{
-                        aux4=0;
-                    }
-                    if(aux[5]==word1[5]){
-                        aux5=1;
-                    }else{
-                        aux5=0;
-                    }
-                    if(aux[6]==word1[6]){
-                        aux6=1;
-                    }else{
-                        aux6=0;
-                    }
-                    if(aux[7]==word1[7]){
-                        aux7=1;
-                    }else{
-                        aux7=0;
-                    }
-                    if((aux0&&aux1&&aux2&&aux3&&aux3&&aux4&&aux5&&aux6&&aux7)==1){
-                        return 2;
-                    }else{
-                        return 1;
-                    }
-            }else{
                 return 1;
             }
 
-
-
-        full_back();
-        sucess();
+        }
+        for(int i=0;i<30;i++){
+            get[i]=' ';
+           // printf("%c",get[i]);
+        }
 
     }else{
 
@@ -258,6 +202,7 @@ int S(int q,char c){
 
     }
 }
+
 
 char casting(int c){
     switch (c)
