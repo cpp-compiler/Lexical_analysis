@@ -1,6 +1,8 @@
 #include "scanner.hpp"
 FILE *file_p;
 char word1[]={'i','d','e','n','t','i','t','y'};
+char word2[]={'t','r','a','n','s','p','o','s','e'};
+char word3[]={'t','h','r','o','w'};
 char get[30];
 int udef=-1;
 long q=0;
@@ -25,10 +27,10 @@ int token(){
                             return 1;
                         }
                     }*/
-                    if(compare(get)==2){
+                    if(compare(get)==2||compare1(get)==2||compare2(get)==2){
                             printf("here2");
                         return 2;
-                    }else if(compare(get)==1){
+                    }else if(compare(get)==1||compare1(get)==1||compare2(get)==1){
                             printf("here1");
                         return 1;
                     }
@@ -70,6 +72,77 @@ int compare(char c[]){
                         }else{
                             return 1;
                         }
+                    }else{
+                        return 1;
+                    }
+                }else{
+                    return 1;
+                }
+            }else{
+                return 1;
+            }
+        }else{
+            return 1;
+        }
+    }else{
+        return 1;
+    }
+}
+int compare1(char c[]){
+     printf("t");
+    if(c[0]==word2[0]){
+             printf("r");
+            if(c[1]==word2[1]){
+                 printf("a");
+                if(c[2]==word2[2]){
+                     printf("n");
+                    if(c[3]==word2[3]){
+                         printf("s");
+                        if(c[4]==word2[4]){
+                             printf("p");
+                            if(c[5]==word2[5]){
+                                printf("o");
+                               if(c[6]==word2[6]){
+                                     printf("s");
+                                    if(c[7]==word2[7]){
+                                        return 2;
+                                    }else{
+                                        return 1;
+                                    }
+                               }else{
+                                    return 1;
+                               }
+                            }else{
+                                return 1;
+                            }
+                        }else{
+                            return 1;
+                        }
+                    }else{
+                        return 1;
+                    }
+                }else{
+                    return 1;
+                }
+            }else{
+                return 1;
+            }
+    }else{
+        return 1;
+    }
+}
+int compare2(char c[]){
+     printf("t");
+    if(c[0]==word3[0]){
+             printf("h");
+        if(c[1]==word3[1]){
+                 printf("r");
+            if(c[2]==word3[2]){
+                 printf("o");
+                if(c[3]==word3[3]){
+                     printf("w");
+                    if(c[4]==word3[4]){
+                        return 2;
                     }else{
                         return 1;
                     }
