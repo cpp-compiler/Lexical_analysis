@@ -11,14 +11,14 @@
 	<stdlib.h>
 	<ctype.h>
 
-1571280024 source:c:\users\martin\documents\github\lexical_analysis\main.cpp
+1571616720 source:c:\users\martin\documents\github\lexical_analysis\main.cpp
 	"scanner.hpp"
 
-1571281462 c:\users\martin\documents\github\lexical_analysis\scanner.hpp
+1571616845 c:\users\martin\documents\github\lexical_analysis\scanner.hpp
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
 
-1571283262 source:c:\users\martin\documents\github\lexical_analysis\scanner.cpp
+1571618107 source:c:\users\martin\documents\github\lexical_analysis\scanner.cpp
 	"scanner.hpp"
 

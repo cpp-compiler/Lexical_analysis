@@ -12,38 +12,149 @@ char w;
 char a;
 
 int token(){
-
-
             if(wsp()){
                 full_back();
                 sucess();
             }
             if(udfa()==1){
-                    int len=length(get);
-                    /*for(int i=0;i<len;i++){
-                        if(get[i]==word1[i]){
-                            return 2;
-                        }else{
-                            return 1;
-                        }
-                    }*/
-                    if(compare(get)==2||compare1(get)==2||compare2(get)==2){
-                            printf("here2");
-                        return 2;
-                    }else if(compare(get)==1||compare1(get)==1||compare2(get)==1){
-                            printf("here1");
-                        return 1;
-                    }
+                int len=length(get);
+                printf("longi %i",len);
+                delta();
+                if(compare(get)==2||compare1(get)==2||compare2(get)==2){
+                    for(int i=0;i<=len;i++){
+                    get[i]=' ';
+                    printf("++%c++",get[i]);
+                }
+                    return 2;
+                }else if(compare(get)==1||compare1(get)==1||compare2(get)==1){
+                    for(int i=0;i<=len;i++){
+                    get[i]=' ';
+                    printf("++%c++",get[i]);
+                }
+                    return 1;
+                }
 
-                //return 1;
-            }/*
-            if(udfa()==2){
-                return 2;
-            }*/
+            }
 
             if(udfa()==0){
-                return 3;
+                return 7;
             }
+}
+void clearw(int n,char c[]){
+
+}
+int delta(){
+    int len=length(get);
+    printf("<lenght %i>",len);
+}
+int S2(int q,char c){
+    switch(q){
+    case 0:
+        if(c=='0'){
+            return 1;
+        }else{
+            return udef;
+        }
+        if(c>='1'&& c<='9'){
+            return 7;
+        }else{
+            return udef;
+        }
+        break;
+    case 1:
+        if(c>='1'&& c<='7'){
+            return 6;
+        }else{
+            return udef;
+        }
+        if(c=='x'||c=='X'){
+            return 3;
+        }else{
+            return udef;
+        }
+        if(c=='.'){
+            return 8;
+        }else{
+            return udef;
+        }
+        break;
+    case 3:
+        if((c>='0'&& c<='9')||((c>='a'&& c<='f')||(c>='A'&&c<='F'))){
+            return 4;
+        }else{
+            return udef;
+        }
+        break;
+    case 4:
+        if((c>='0'&& c<='9')||((c>='a'&& c<='f')||(c>='A'&&c<='F'))){
+            return 4;
+        }else{
+            return udef;
+        }
+        break;
+    case 6:
+        if(c>='1'&& c<='7'){
+            return 6;
+        }else{
+            return udef;
+        }
+        break;
+    case 7:
+        if(c>='0'&& c<='9'){
+            return 7;
+        }else{
+            return udef;
+        }
+        if(c=='.'){
+            return 8;
+        }else{
+            return udef;
+        }
+        if(c=='e'||c=='E'){
+            return 10;
+        }else{
+            return udef;
+        }
+        break;
+    case 8:
+        if(c>='0'&& c<='9'){
+            return 9;
+        }else{
+            return udef;
+        }
+        break;
+    case 9:
+        if(c>='0'&& c<='9'){
+            return 9;
+        }else{
+            return udef;
+        }
+        if(c=='e'||c=='E'){
+            return 10;
+        }else{
+            return udef;
+        }
+        break;
+    case 10:
+        if(c=='-'||c=='+'){
+            return 10;
+        }else{
+            return udef;
+        }
+        if(c>='0'&& c<='9'){
+            return 11;
+        }else{
+            return udef;
+        }
+        break;
+    case 11:
+        if(c>='0'&& c<='9'){
+            return 11;
+        }else{
+            return udef;
+        }
+        break;
+    }
 }
 int compare(char c[]){
         printf("1");

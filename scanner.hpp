@@ -26,6 +26,9 @@ int length(char[]);
 int compare(char[]);
 int compare1(char[]);
 int compare2(char[]);
+int S2(int,char);
+int delta();
+void clearw(int,char[]);
 
 #endif
 
