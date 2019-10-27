@@ -19,7 +19,7 @@ int token(){
             }
             if(udfa()==1){
                 int len=length(get);
-                delta();
+               // delta();
                 if(compare(get)==2||compare1(get)==2||compare2(get)==2){
                     for(int i=0;i<=len;i++){//clear word
                         //printf("%c",get[i]);
@@ -31,30 +31,39 @@ int token(){
                     for(int i=0;i<=len;i++){//clear word
                        //     printf("%c",get[i]);
                                 get[i]=' ';
-
                     }
                     return 1;
                 }
 
-            }
-
-            if(udfa()==0){
-                /*if(delta()==5){
+            }else{
+                wsp();//just take one letter bouth not.
+                //fail();
+                //full_back();
+                //sucess();
+                if(delta()==3){
+                        wsp();
+                    return 3;
+                }else if(delta()==4){
+                   wsp();
+                    return 4;
+                }else if(delta()==7||delta()==9||delta()==11){
+                wsp();
                     return 5;
                 }
-                if(delta()==6){
+
+            }
+
+             /*if(udfa()==0){
+                if(delta()==3){
                     return 3;
                 }else if(delta()==4){
                     return 4;
-                }else if(delta()==7){
+                }else if(delta()==7||delta()==9||delta()==11){
                     return 5;
-                }else if(delta()==9){
-                    return 5;
-                }else if(delta()==11){
-                    return 5;
-                }*/
-                return 7;
-            }
+                }
+            }*/
+
+
 }
 void clearw(int n,char c[]){
 
@@ -62,6 +71,36 @@ void clearw(int n,char c[]){
 int delta(){
     int len=length(get);
     printf("<lenght %i>",len);
+    int qq=0,aux;
+    int lstate=0;
+    for(int i=0;i<=len;i++){
+        lstate=qq;
+        if(get[i]=='\0'||get[i]==' '){
+          //  return 2;
+        }else{
+            aux=qq=S2(qq,get[i]);
+            printf("aux%i",aux);
+        }
+        printf("\n<lstate %i qq %i i%i get[%c]> ",lstate,qq,i,get[i]);
+
+    }
+    if(lstate==6){
+        return 3;
+    }else if(lstate==4){
+        return 4;
+    }else if(lstate==7||lstate==9||lstate==11){
+        return 5;
+    }else{
+        return 7;
+    }//endstate -1
+    /*if(delta()==5||delta()==3||delta()==4||delta()==7||delta()==9||delta()==11){
+          full_back();
+            sucess();
+
+    }else{
+            fail();
+            return 7;
+    }*/
     /*int actual=0,prior;
     int it=0;
     while(actual!=udef){
@@ -78,14 +117,13 @@ int delta(){
 int S2(int q,char c){
     switch(q){
     case 0:
-        printf("here1 [%c]",c);
+        //printf("\nhere1 [%c]",c);
         if(c=='0'){
-
+            printf("\nhere1 [%c]",c);
             return 1;
-        }else{
-            return udef;
-        }
-        if(c>='1'&& c<='9'){
+        }else if(c>='1'&& c<='9'){
+        printf("\nhere2 [%c]",c);
+
             return 7;
         }else{
             return udef;
@@ -94,15 +132,9 @@ int S2(int q,char c){
     case 1:
         if(c>='1'&& c<='7'){
             return 6;
-        }else{
-            return udef;
-        }
-        if(c=='x'||c=='X'){
+        }else if(c=='x'||c=='X'){
             return 3;
-        }else{
-            return udef;
-        }
-        if(c=='.'){
+        }else if(c=='.'){
             return 8;
         }else{
             return udef;
@@ -132,15 +164,9 @@ int S2(int q,char c){
     case 7:
         if(c>='0'&& c<='9'){
             return 7;
-        }else{
-            return udef;
-        }
-        if(c=='.'){
+        }else if(c=='.'){
             return 8;
-        }else{
-            return udef;
-        }
-        if(c=='e'||c=='E'){
+        }else if(c=='e'||c=='E'){
             return 10;
         }else{
             return udef;
@@ -156,10 +182,7 @@ int S2(int q,char c){
     case 9:
         if(c>='0'&& c<='9'){
             return 9;
-        }else{
-            return udef;
-        }
-        if(c=='e'||c=='E'){
+        }else if(c=='e'||c=='E'){
             return 10;
         }else{
             return udef;
@@ -168,10 +191,7 @@ int S2(int q,char c){
     case 10:
         if(c=='-'||c=='+'){
             return 10;
-        }else{
-            return udef;
-        }
-        if(c>='0'&& c<='9'){
+        }else if(c>='0'&& c<='9'){
             return 11;
         }else{
             return udef;
