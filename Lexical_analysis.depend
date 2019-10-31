@@ -22,3 +22,17 @@
 1571630038 source:c:\users\martin\documents\github\lexical_analysis\scanner.cpp
 	"scanner.hpp"
 
+1572506714 source:c:\users\alien\documents\github\lexical_analysis\main.cpp
+	"scanner.hpp"
+
+1572505997 c:\users\alien\documents\github\lexical_analysis\scanner.hpp
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+
+1572508676 source:c:\users\alien\documents\github\lexical_analysis\scanner.cpp
+	"scanner.hpp"
+
+1572496640 c:\users\alien\documents\github\lexical_analysis\scanner.cpp
+	"scanner.hpp"
+

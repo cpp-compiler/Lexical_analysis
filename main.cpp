@@ -14,6 +14,6 @@ int main(){
             }
 
         } while (EOFF());
-    return 0;
+
     return 0;
 }

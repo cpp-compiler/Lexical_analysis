@@ -14,9 +14,10 @@ char a;
 
 int token(){
             if(wsp()){
-                full_back();
+              full_back();
                 sucess();
             }
+
             if(udfa()==1){
                 int len=length(get);
                // delta();
@@ -65,8 +66,54 @@ int token(){
 
 
 }
-void clearw(int n,char c[]){
+int read(){
+        int c;
+        signed int aux;
+        char word;
+        //pp=ftell(file_p);
+        //p=pp;
+       //printf("\n-pos %li-",pp);
+        //fseek(file_p,p,SEEK_SET);
+        c=fgetc(file_p);
+        aux=c;
+     //printf("[{%i}]",c);
+    //printf("[%c][%c]",c,aux);
+        word=casting(aux);
+        set_letter(word);
 
+    return aux;
+}
+void open(const char* name){ file_p=fopen(name,"r");}
+void set_letter(char cyk){ w=cyk; }
+char get_letter(){ return w; }
+void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
+void fail(){fseek(file_p,q,SEEK_SET);}
+void full_back(){ fseek(file_p,-1,SEEK_CUR);}
+bool EOFF(){
+    if(read()==EOF){
+
+        printf("si");
+       // full_back();
+        return false;
+    }
+        printf("no");
+        // full_back();
+        //sucess();
+        return true;
+
+}
+int length(char c[]){
+    int i=0;
+    while(c[i]!=' ' && c[i]!='\0'){
+        i++;
+    }
+    return i;
+}
+bool wsp(){
+        while(isspace(read()))
+        full_back();
+        sucess();
+        return true;
 }
 int delta(){
     int len=length(get);
@@ -206,6 +253,78 @@ int S2(int q,char c){
         break;
     }
 }
+int udfa(){
+    int actual=0,prior;
+    bool flag_a;
+    char c;
+    int a,b;
+    int i=0;
+    while(actual!=udef && EOFF()){
+        prior=actual;
+	    c=get_letter();
+
+        b=actual=S(actual,c);
+        get[i]=c;
+        i+=1;
+       printf(" p%li and q%li",p,q);
+       printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
+    }
+
+        if(b==2){
+                //full_back();
+            //sucess();
+            return 1;
+
+        }
+
+
+    if(prior==2){
+        full_back();
+        sucess();
+
+         return 1;
+
+    }else{
+
+
+        fail();
+
+        return 0;
+    }
+}
+int S(int q,char c){
+
+    switch(q){
+        case 0:
+
+		    if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
+                        return 2;
+                    }else if(c=='_'){
+                        return 1;
+                    }else{
+                        return udef;
+                    }
+            break;
+        case 1:
+
+		    if((c>='0'&& c<='9')||(c=='_')){
+                        return 1;
+                    }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
+                        return 2;
+                    }else{
+                        return udef;
+                    }
+            break;
+        case 2:
+                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
+                        return 2;
+                    }else{
+                        return udef;
+                    }
+            break;
+
+    }
+}
 int compare(char c[]){
     if(c[0]==word1[0]){
         if(c[1]==word1[1]){
@@ -300,130 +419,6 @@ int compare2(char c[]){
         return 1;
     }
 }
-int read(){
-        int c;
-        signed int aux;
-        char word;
-        //pp=ftell(file_p);
-        //p=pp;
-       //printf("\n-pos %li-",pp);
-        //fseek(file_p,p,SEEK_SET);
-        c=fgetc(file_p);
-        aux=c;
-     //printf("[{%i}]",c);
-    //printf("[%c][%c]",c,aux);
-        word=casting(aux);
-        set_letter(word);
-
-    return aux;
-}
-void open(const char* name){ file_p=fopen(name,"r");}
-void set_letter(char cyk){ w=cyk; }
-char get_letter(){ return w; }
-void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
-void fail(){fseek(file_p,q,SEEK_SET);}
-void full_back(){ fseek(file_p,-1,SEEK_CUR);}
-
-bool EOFF(){
-    if(read()==EOF){
-
-         //printf("si");
-       // full_back();
-        return false;
-    }
-        //printf("no");
-        // full_back();
-        //sucess();
-        return true;
-
-}
-int length(char c[]){
-    int i=0;
-    while(c[i]!=' ' && c[i]!='\0'){
-        i++;
-    }
-    return i;
-}
-bool wsp(){
-        while(isspace(read()))
-        full_back();
-        sucess();
-        return true;
-}
-int udfa(){
-    int actual=0,prior;
-    bool flag_a;
-    char c;
-    int a,b;
-    int i=0;
-    while(actual!=udef && EOFF()){
-        prior=actual;
-	    c=get_letter();
-
-        b=actual=S(actual,c);
-        get[i]=c;
-        i+=1;
-       printf(" p%li and q%li",p,q);
-       printf("\n<c[%c] prior[%i] actual[%i]>",c,prior,actual);
-    }
-
-        if(b==2){
-                //full_back();
-            //sucess();
-            return 1;
-
-        }
-
-
-    if(prior==2){
-        full_back();
-        sucess();
-
-         return 1;
-
-    }else{
-
-
-        fail();
-
-        return 0;
-    }
-}
-int S(int q,char c){
-
-    switch(q){
-        case 0:
-
-		    if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        return 2;
-                    }else if(c=='_'){
-                        return 1;
-                    }else{
-                        return udef;
-                    }
-            break;
-        case 1:
-
-		    if((c>='0'&& c<='9')||(c=='_')){
-                        return 1;
-                    }else if((c>='a'&& c<='z')||(c>='A'&&c<='Z')){
-                        return 2;
-                    }else{
-                        return udef;
-                    }
-            break;
-        case 2:
-                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
-                        return 2;
-                    }else{
-                        return udef;
-                    }
-            break;
-
-    }
-}
-
-
 char casting(int c){
     switch (c)
     {
@@ -452,6 +447,9 @@ char casting(int c){
             break;
     case 47:
             return '/';
+            break;
+    case 46:
+            return '.';
             break;
     case 44:
             return ',';
