@@ -5,8 +5,8 @@
 #include <ctype.h>
 
 //FUNCTIONS
-typedef enum{_identifier,_eof,_err} secuential;
-secuential next();
+typedef enum{_identifier,_eof,_err} sequential;
+sequential next();
 /////////////
 bool EOFF();
 int read();

@@ -11,77 +11,38 @@ long p=0;
 
 char w;
 char a;
+sequential next(){
+        wsp();
+        if(udfa()==1){
 
-int token(){
-            if(wsp()){
-              full_back();
-                sucess();
-            }
-
-            if(udfa()==1){
-                int len=length(get);
-               // delta();
-                if(compare(get)==2||compare1(get)==2||compare2(get)==2){
-                    for(int i=0;i<=len;i++){//clear word
-                        //printf("%c",get[i]);
-
-                        get[i]=' ';
-                    }
-                    return 2;
-                }else if(compare(get)==1||compare1(get)==1||compare2(get)==1){
-                    for(int i=0;i<=len;i++){//clear word
-                       //     printf("%c",get[i]);
-                                get[i]=' ';
-                    }
-                    return 1;
-                }
-
-            }else{
-                wsp();//just take one letter bouth not.
-                //fail();
-                //full_back();
-                //sucess();
-                if(delta()==3){
-                        wsp();
-                    return 3;
-                }else if(delta()==4){
-                   wsp();
-                    return 4;
-                }else if(delta()==7||delta()==9||delta()==11){
-                wsp();
-                    return 5;
-                }
-
-            }
-
-             /*if(udfa()==0){
-                if(delta()==3){
-                    return 3;
-                }else if(delta()==4){
-                    return 4;
-                }else if(delta()==7||delta()==9||delta()==11){
-                    return 5;
-                }
-            }*/
-
-
+           
+                return _identifier;
+        }
+        if(udfa()==0){
+                return _err;
+        }
+        if(EOFF()==false){
+            return _eof;
+        }
 }
+
 int read(){
         int c;
         signed int aux;
         char word;
+        char wop;
         //pp=ftell(file_p);
         //p=pp;
        //printf("\n-pos %li-",pp);
         //fseek(file_p,p,SEEK_SET);
-        c=fgetc(file_p);
+        c=wop=fgetc(file_p);
         aux=c;
      //printf("[{%i}]",c);
     //printf("[%c][%c]",c,aux);
         word=casting(aux);
         set_letter(word);
 
-    return aux;
+    return wop;
 }
 void open(const char* name){ file_p=fopen(name,"r");}
 void set_letter(char cyk){ w=cyk; }
@@ -94,174 +55,35 @@ bool EOFF(){
 
         printf("si");
        // full_back();
+       
         return false;
     }
         printf("no");
         // full_back();
         //sucess();
+       
         return true;
 
 }
-int length(char c[]){
-    int i=0;
-    while(c[i]!=' ' && c[i]!='\0'){
-        i++;
-    }
-    return i;
-}
+
 bool wsp(){
-        while(isspace(read()))
+        while(isspace(read()));
         full_back();
         sucess();
         return true;
-}
-int delta(){
-    int len=length(get);
-    printf("<lenght %i>",len);
-    int qq=0,aux;
-    int lstate=0;
-    for(int i=0;i<=len;i++){
-        lstate=qq;
-        if(get[i]=='\0'||get[i]==' '){
-          //  return 2;
-        }else{
-            aux=qq=S2(qq,get[i]);
-            printf("aux%i",aux);
-        }
-        printf("\n<lstate %i qq %i i%i get[%c]> ",lstate,qq,i,get[i]);
-
-    }
-    if(lstate==6){
-        return 3;
-    }else if(lstate==4){
-        return 4;
-    }else if(lstate==7||lstate==9||lstate==11){
-        return 5;
-    }else{
-        return 7;
-    }//endstate -1
-    /*if(delta()==5||delta()==3||delta()==4||delta()==7||delta()==9||delta()==11){
-          full_back();
-            sucess();
-
-    }else{
-            fail();
-            return 7;
-    }*/
-    /*int actual=0,prior;
-    int it=0;
-    while(actual!=udef){
-        printf("[%c]",get[it]);
-        prior=actual;
-            actual=S2(actual,get[it]);
-
-        printf("\n<actual %i prior %i> it%i",actual,prior,it);
-        it++;
-    }*/
-
+     
 
 }
-int S2(int q,char c){
-    switch(q){
-    case 0:
-        //printf("\nhere1 [%c]",c);
-        if(c=='0'){
-            printf("\nhere1 [%c]",c);
-            return 1;
-        }else if(c>='1'&& c<='9'){
-        printf("\nhere2 [%c]",c);
 
-            return 7;
-        }else{
-            return udef;
-        }
-        break;
-    case 1:
-        if(c>='1'&& c<='7'){
-            return 6;
-        }else if(c=='x'||c=='X'){
-            return 3;
-        }else if(c=='.'){
-            return 8;
-        }else{
-            return udef;
-        }
-        break;
-    case 3:
-        if((c>='0'&& c<='9')||((c>='a'&& c<='f')||(c>='A'&&c<='F'))){
-            return 4;
-        }else{
-            return udef;
-        }
-        break;
-    case 4:
-        if((c>='0'&& c<='9')||((c>='a'&& c<='f')||(c>='A'&&c<='F'))){
-            return 4;
-        }else{
-            return udef;
-        }
-        break;
-    case 6:
-        if(c>='1'&& c<='7'){
-            return 6;
-        }else{
-            return udef;
-        }
-        break;
-    case 7:
-        if(c>='0'&& c<='9'){
-            return 7;
-        }else if(c=='.'){
-            return 8;
-        }else if(c=='e'||c=='E'){
-            return 10;
-        }else{
-            return udef;
-        }
-        break;
-    case 8:
-        if(c>='0'&& c<='9'){
-            return 9;
-        }else{
-            return udef;
-        }
-        break;
-    case 9:
-        if(c>='0'&& c<='9'){
-            return 9;
-        }else if(c=='e'||c=='E'){
-            return 10;
-        }else{
-            return udef;
-        }
-        break;
-    case 10:
-        if(c=='-'||c=='+'){
-            return 10;
-        }else if(c>='0'&& c<='9'){
-            return 11;
-        }else{
-            return udef;
-        }
-        break;
-    case 11:
-        if(c>='0'&& c<='9'){
-            return 11;
-        }else{
-            return udef;
-        }
-        break;
-    }
-}
 int udfa(){
     int actual=0,prior;
     bool flag_a;
     char c;
     int a,b;
     int i=0;
-    while(actual!=udef && EOFF()){
+    while(actual!=udef){
         prior=actual;
-	    c=get_letter();
+	    c=read();
 
         b=actual=S(actual,c);
         get[i]=c;
@@ -325,100 +147,7 @@ int S(int q,char c){
 
     }
 }
-int compare(char c[]){
-    if(c[0]==word1[0]){
-        if(c[1]==word1[1]){
-            if(c[2]==word1[2]){
-                if(c[3]==word1[3]){
-                    if(c[4]==word1[4]){
-                        if(c[5]==word1[5]){
-                            if(c[6]==word1[6]){
-                                if(c[7]==word1[7]){
-                                    return 2;
-                                }else{
-                                    return 1;
-                                }
-                            }else{
-                                return 1;
-                            }
-                        }else{
-                            return 1;
-                        }
-                    }else{
-                        return 1;
-                    }
-                }else{
-                    return 1;
-                }
-            }else{
-                return 1;
-            }
-        }else{
-            return 1;
-        }
-    }else{
-        return 1;
-    }
-}
-int compare1(char c[]){
-    if(c[0]==word2[0]){
-            if(c[1]==word2[1]){
-                if(c[2]==word2[2]){
-                    if(c[3]==word2[3]){
-                        if(c[4]==word2[4]){
-                            if(c[5]==word2[5]){
-                               if(c[6]==word2[6]){
 
-                                    if(c[7]==word2[7]){
-                                        return 2;
-                                    }else{
-                                        return 1;
-                                    }
-                               }else{
-                                    return 1;
-                               }
-                            }else{
-                                return 1;
-                            }
-                        }else{
-                            return 1;
-                        }
-                    }else{
-                        return 1;
-                    }
-                }else{
-                    return 1;
-                }
-            }else{
-                return 1;
-            }
-    }else{
-        return 1;
-    }
-}
-int compare2(char c[]){
-    if(c[0]==word3[0]){
-        if(c[1]==word3[1]){
-            if(c[2]==word3[2]){
-                if(c[3]==word3[3]){
-                    if(c[4]==word3[4]){
-                        return 2;
-                    }else{
-                        return 1;
-                    }
-                }else{
-                    return 1;
-                }
-            }else{
-                return 1;
-            }
-        }else{
-            return 1;
-        }
-    }else{
-        return 1;
-    }
-}
 char casting(int c){
     switch (c)
     {
