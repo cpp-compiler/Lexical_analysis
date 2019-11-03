@@ -20,7 +20,7 @@ int main(){
                 case 7: printf("END File");*/
             }
 
-        } while (tokenn!=_eof&&tokenn!=_err);
+        } while (tokenn!=_eof && tokenn!=_err);
 
     return 0;
 }

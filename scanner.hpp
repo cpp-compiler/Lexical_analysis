@@ -15,10 +15,7 @@ void fail();
 void sucess();
 void full_back();
 /////////////
-int token();
-char get_letter();
-void set_letter(char);
-char casting(int);
+
 void open(const char*);
 ///////////////
 int udfa();
