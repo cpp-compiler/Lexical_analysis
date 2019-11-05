@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 //FUNCTIONS
-typedef enum{_identifier,_eof,_err} sequential;
+typedef enum{_identifier,_eof,_err,_resv_word} sequential;
 sequential next();
 /////////////
 bool EOFF();
@@ -27,6 +27,12 @@ int compare2(char[]);
 int S2(int,char);
 int delta();
 
+
+void word();
+void clear_word();
+bool reserved_word();
+bool reserved_word1();
+bool reserved_word2();
 
 #endif
 
