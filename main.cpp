@@ -11,11 +11,14 @@ int main(){
                 case 1: printf("EOF");break;
                 case 2: printf("ERR");break;
                 case 3: printf("Reserved word");break;
+                case 4: printf("Octal number"); break;
+                case 5: printf("Hexadecimal"); break;
+                case 6: printf("Real number"); break;
                 /*case 1: printf("Identificator");break;
                 case 2: printf("Reserved word");break;
-                case 3: printf("Octal number"); break;
-                case 4: printf("Hexadecimal"); break;
-                case 5: printf("Real number"); break;
+                
+                
+                
 
                 case 7: printf("END File");*/
             }

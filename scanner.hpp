@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 //FUNCTIONS
-typedef enum{_identifier,_eof,_err,_resv_word} sequential;
+typedef enum{_identifier,_eof,_err,_resv_word,_oct,_hex,_rea} sequential;
 sequential next();
 /////////////
 bool EOFF();
@@ -20,12 +20,13 @@ void open(const char*);
 ///////////////
 int udfa();
 int S(int,char);
+int delta();
+int S2(int,char);
 int length(char[]);
 int compare(char[]);
 int compare1(char[]);
 int compare2(char[]);
-int S2(int,char);
-int delta();
+
 
 
 void word();
