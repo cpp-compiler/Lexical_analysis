@@ -9,7 +9,7 @@ int main(){
             switch(tokenn){
                 case 0: printf("Identificator");break;
                 case 1: printf("EOF");break;
-                case 2: printf("ERR");break;
+                case 2: printf("ERR");printf("error: %i ",line());break;
                 case 3: printf("Reserved word");break;
                 case 4: printf("Octal number"); break;
                 case 5: printf("Hexadecimal"); break;
