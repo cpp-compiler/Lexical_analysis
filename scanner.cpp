@@ -8,7 +8,7 @@ char get1[30];
 int udef=-1;
 long q=0;
 long p=0;
-
+long f=0;
 sequential next(){
         if(wsp()){
             
@@ -24,26 +24,19 @@ sequential next(){
                 }
         }
         int d=delta();
-        switch (d)
-        {
-        case 6:
+        if(d==6){
             printf("S1");
             return _oct;
-                break;
-        case 4:
+        }else if(d==4){
             printf("S2");
             return _hex;
-                 break;    
-        case 11:
+        }else if(d==11){
             printf("S3");
               return _rea;
-              break;
-        default:
-
-            break;
+        }else{
+              
         }
-        
-        
+                
         if(EOFF()) return _eof;
        
         return _err;
@@ -70,6 +63,7 @@ int delta(){
        printf("\n<dc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
        //EOFF();
        word();
+       
     }
     if(prior==6){
         printf("op1");
@@ -78,22 +72,14 @@ int delta(){
         
        return 6;
          
-    }else{
-        fail();
-        return 0;
-    }
-    if(prior==4){
+    }else if(prior==4){
             printf("op2");
             full_back();
         sucess();
         
        return 4;
         
-    }else{
-        fail();
-        return 0;
-    }
-    if(prior==11||prior==7||prior==9){
+    }else if(prior==11||prior==7||prior==9){
             printf("op3");
             full_back();
         sucess();
@@ -236,8 +222,8 @@ int read(){
 }
 void open(const char* name){ file_p=fopen(name,"r");}
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
-void fail(){fseek(file_p,q,SEEK_SET);}
-void full_back(){ fseek(file_p,-1,SEEK_CUR);}
+void fail(){p=fseek(file_p,q,SEEK_SET);printf("\n{Activated fail %li}",p);}
+void full_back(){ f=fseek(file_p,-1,SEEK_CUR);printf("\n{Activated full back %li}",f);}
 
 bool EOFF(){
    
