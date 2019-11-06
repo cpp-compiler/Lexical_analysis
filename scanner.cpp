@@ -34,7 +34,7 @@ sequential next(){
             printf("S3");
               return _rea;
         }else{
-              
+              return _err;
         }
                 
         if(EOFF()) return _eof;
@@ -72,7 +72,7 @@ int delta(){
         
        return 6;
          
-    }else if(prior==4){
+    }else if(prior==5){
             printf("op2");
             full_back();
         sucess();
@@ -129,10 +129,17 @@ int S2(int q,char c){
         break;
     case 4:
         if((c>='0'&& c<='9')||((c>='a'&& c<='f')||(c>='A'&&c<='F'))){
-            return 4;
+            return 5;
         }else{
             return udef;
         }
+        break;
+    case 5:
+        if((c>='0'&& c<='9')||((c>='a'&& c<='f')||(c>='A'&&c<='F'))){
+            return 5;
+        }else{
+            return udef;
+        }    
         break;
     case 6:
         if(c>='1'&& c<='7'){
