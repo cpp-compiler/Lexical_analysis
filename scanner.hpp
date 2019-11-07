@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 //FUNCTIONS
-typedef enum{_identifier,_eof,_err,_resv_word,_oct,_hex,_rea} sequential;
+typedef enum{_identifier,_eof,_err,_resv_word,_oct,_hex,_rea,_leftp,_rightp,_leftb,_rightb,_sum,_sub,_mult,_div,_coma,_semicolon,_colons} sequential;
 sequential next();
 
 /////////////

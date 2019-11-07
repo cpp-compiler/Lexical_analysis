@@ -35,11 +35,42 @@ sequential next(){
         }else if(d==11){
             printf("S3");
               return _rea;
-        }else{
+        }/*else{
+             // return _err;
+            
+        }*/
 
-              return _err;
+            
+        int dp=delta_op();
+        printf("\tDP %i",dp);
+        if(dp==1){
+            return _leftp;
+        }else if(dp==2){
+            return _rightp;
+        }else if(dp==3){
+            return _leftb;
+        }else if(dp==4){
+            return _rightb;
+        }else if(dp==5){
+            return _sum;
+        }else if(dp==6){
+            return _sub;
+        }else if(dp==7){
+            return _mult;
+        }else if(dp==8){
+            return _div;
+        }else if(dp==9){
+            return _coma;
+        }else if(dp==10){
+            return _semicolon;
+        }else if(dp==11){
+            return _colons;
+        }else{
+            return _err;
         }
-                
+           
+            
+                 
         if(EOFF()) return _eof;
        
         return _err;
@@ -47,8 +78,93 @@ sequential next(){
         
         //EOFF();
 }
+int delta_op(){
+     int actual=0,prior;
+    bool flag_a;
+    char c;
 
+    int i=0;
+    while(actual!=udef){
+        prior=actual;
+	    c=read();
 
+        actual=S3(actual,c);
+        
+       printf(" p%li and q%li",p,q);
+       printf("\n<dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+      
+    }
+       
+    
+    if(prior==1){
+        full_back();
+        sucess();
+        return 1;
+    }else if(prior==2){
+        full_back();
+        sucess();
+        return 2;
+    }else if(prior==3){
+        full_back();
+        sucess();
+        return 3;
+    }else if(prior==4){
+        full_back();
+        sucess();
+        return 4;
+    }else if(prior==5){
+        full_back();
+        sucess();
+        return 5;
+    }else if(prior==6){
+        full_back();
+        sucess();
+        return 6;
+    }else if(prior==7){
+        full_back();
+        sucess();
+        return 7;
+    }else if(prior==8){
+        full_back();
+        sucess();
+        return 8;
+    }else if(prior==9){
+        full_back();
+        sucess();
+        return 9;
+    }else if(prior==10){
+        full_back();
+        sucess();
+        return 10;
+    }else if(prior==11){
+        full_back();
+        sucess();
+        return 11;
+    }else{
+        fail();
+        return 0;
+    }
+}
+int S3(int q,char c){
+    if(q==0){
+        switch (c)
+        {
+        case '(':return 1;break;
+        case ')':return 2;break;
+        case '[':return 3;break;
+        case ']':return 4;break;
+        case '+':return 5;break;
+        case '-':return 6;break;
+        case '*':return 7;break;
+        case '/':return 8;break;
+        case ',':return 9;break;
+        case ';':return 10;break;
+        case ':':return 11;break;   
+        }
+        return udef;
+    }
+    return udef;
+}
 void word(){
     int n=length(get);
     for(int i=0;i<n;i++){
@@ -233,12 +349,9 @@ int S2(int q,char c){
     case 0:
         //printf("\nhere1 [%c]",c);
         if(c=='0'){
-            printf("\nhere1 [%c]",c);
-            return 1;
+             return 1;
         }else if(c>='1'&& c<='9'){
-        printf("\nhere2 [%c]",c);
-
-            return 7;
+          return 7;
         }else{
             return udef;
         }
