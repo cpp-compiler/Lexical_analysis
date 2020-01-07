@@ -19,23 +19,51 @@ void full_back();
 
 void open(const char*);
 ///////////////
-int udfa();
+int automaton_One_id();
 int S(int,char);
-int delta();
+
+int automaton_Two_delta();
 int S2(int,char);
-int delta_op();
+
+int automaton_Three_delta_op();
 int S3(int,char);
+
+int automaton_Four_wspeof();
+int S4(int,char);
+
 int length(char[]);
+
 int compare(char[]);
 int compare1(char[]);
 int compare2(char[]);
 
-int line();
+int lines(); 
+bool comments();
+//int line();
 void word();
 void clear_word();
-bool reserved_word();
-bool reserved_word1();
-bool reserved_word2();
 
+bool automaton_One_reserved_word();
+bool automaton_One_reserved_word1();
+bool automaton_One_reserved_word2();
+/*
+TASKS
+message when the analysis had finished
+
+number of lines of the file
+
+6. Comentarios
+Un comentario es cualquier secuencia de caracteres que inicia con la marca # (hash) y termina con el fin de
+línea.
+
+11. Espacios en blanco
+Se contempla el uso de espacios, tabuladores y saltos de línea.
+
+12. La marca de fin de archivo ( EOF )
+
+token error
+	the carather and the line
+
+*/
 #endif
 

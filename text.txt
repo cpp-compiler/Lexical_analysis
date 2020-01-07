@@ -1,1 +1,4 @@
-helko identity *+-;:] transpose future 
+helko 
+identity
+future 
+.

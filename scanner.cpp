@@ -9,15 +9,15 @@ int udef=-1;
 long q=0;
 long p=0;
 long f=0;
-long lines=0;
+//long line=0;
 
 sequential next(){
         if(wsp()){
             
         }
-        
-        if(udfa()==1){   
-                if(reserved_word()||reserved_word1()||reserved_word2()){
+        //comments();
+        if(automaton_One_id()==1){   
+                if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
                         clear_word();
                     return _resv_word;
                 }else{
@@ -25,7 +25,7 @@ sequential next(){
                 return _identifier;
                 }
         }
-        int d=delta();
+        int d=automaton_Two_delta();
         if(d==6){
             printf("S1");
             return _oct;
@@ -41,7 +41,7 @@ sequential next(){
         }*/
 
             
-        int dp=delta_op();
+        int dp=automaton_Three_delta_op();
         printf("\tDP %i",dp);
         if(dp==1){
             return _leftp;
@@ -78,93 +78,7 @@ sequential next(){
         
         //EOFF();
 }
-int delta_op(){
-     int actual=0,prior;
-    bool flag_a;
-    char c;
 
-    int i=0;
-    while(actual!=udef){
-        prior=actual;
-	    c=read();
-
-        actual=S3(actual,c);
-        
-       printf(" p%li and q%li",p,q);
-       printf("\n<dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
-      
-    }
-       
-    
-    if(prior==1){
-        full_back();
-        sucess();
-        return 1;
-    }else if(prior==2){
-        full_back();
-        sucess();
-        return 2;
-    }else if(prior==3){
-        full_back();
-        sucess();
-        return 3;
-    }else if(prior==4){
-        full_back();
-        sucess();
-        return 4;
-    }else if(prior==5){
-        full_back();
-        sucess();
-        return 5;
-    }else if(prior==6){
-        full_back();
-        sucess();
-        return 6;
-    }else if(prior==7){
-        full_back();
-        sucess();
-        return 7;
-    }else if(prior==8){
-        full_back();
-        sucess();
-        return 8;
-    }else if(prior==9){
-        full_back();
-        sucess();
-        return 9;
-    }else if(prior==10){
-        full_back();
-        sucess();
-        return 10;
-    }else if(prior==11){
-        full_back();
-        sucess();
-        return 11;
-    }else{
-        fail();
-        return 0;
-    }
-}
-int S3(int q,char c){
-    if(q==0){
-        switch (c)
-        {
-        case '(':return 1;break;
-        case ')':return 2;break;
-        case '[':return 3;break;
-        case ']':return 4;break;
-        case '+':return 5;break;
-        case '-':return 6;break;
-        case '*':return 7;break;
-        case '/':return 8;break;
-        case ',':return 9;break;
-        case ';':return 10;break;
-        case ':':return 11;break;   
-        }
-        return udef;
-    }
-    return udef;
-}
 void word(){
     int n=length(get);
     for(int i=0;i<n;i++){
@@ -172,6 +86,7 @@ void word(){
            printf("x{%c}",get[i]);   
     }
 }
+
 /*********************************************************************************************************************************/
 /********************************************************************************************************/
 /********************************************************************************************************/
@@ -185,18 +100,17 @@ void full_back(){ f=fseek(file_p,-1,SEEK_CUR);printf("\n{Activated full back %li
 
 bool EOFF(){
    
-    while(read()!=EOF)
+ /* while(read()!=EOF)
     {
         printf("yes2");
-        //full_back();
         return true;
-        /*if(read()==EOF){
+     */   /*if(read()==EOF){
            printf("yes2");
          //full_back();
          
         return false;     
         }*/
-    }
+    //}
     if(read()==EOF){
             printf("yes3");
         return true;
@@ -209,6 +123,7 @@ bool wsp(){
         sucess();
         return true;
 }
+
 void clear_word(){
     int n=length(get);
     for(int i=0;i<n;i++){
@@ -222,15 +137,20 @@ int length(char c[]){
         i++;
     }
     return i;
-}
-int line(){
-    return lines=ftell((file_p));
-}
+}/*
+int lines(){
+    while (read()==10)
+    {
+        line++;
+    }
+    return line;
+    
+}*/
 /********************************************************************************************************/
 /********************************************************************************************************/
 /********************************************************************************************************/
 
-int udfa(){
+int automaton_One_id(){
     int actual=0,prior;
     bool flag_a;
     char c;
@@ -285,7 +205,7 @@ int S(int q,char c){
                     }
             break;
         case 2:
-                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')){
+                if(((c>='a'&& c<='z')||(c>='A'&&c<='Z'))||((c>='0'&& c<='9'))||(c=='_')||(c==39)){
                         return 2;
                     }else{
                         return udef;
@@ -294,7 +214,7 @@ int S(int q,char c){
             break;
     }
 }
-int delta(){
+int automaton_Two_delta(){
     int len=length(get);
     printf("<lenght %i>",len);
     int actual=0,prior;
@@ -440,7 +360,94 @@ int S2(int q,char c){
         break;
     }
 }
-bool reserved_word(){
+int automaton_Three_delta_op(){
+     int actual=0,prior;
+    bool flag_a;
+    char c;
+
+    int i=0;
+    while(actual!=udef){
+        prior=actual;
+	    c=read();
+
+        actual=S3(actual,c);
+        
+       printf(" p%li and q%li",p,q);
+       printf("\n<dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+      
+    }
+       
+    
+    if(prior==1){
+        full_back();
+        sucess();
+        return 1;
+    }else if(prior==2){
+        full_back();
+        sucess();
+        return 2;
+    }else if(prior==3){
+        full_back();
+        sucess();
+        return 3;
+    }else if(prior==4){
+        full_back();
+        sucess();
+        return 4;
+    }else if(prior==5){
+        full_back();
+        sucess();
+        return 5;
+    }else if(prior==6){
+        full_back();
+        sucess();
+        return 6;
+    }else if(prior==7){
+        full_back();
+        sucess();
+        return 7;
+    }else if(prior==8){
+        full_back();
+        sucess();
+        return 8;
+    }else if(prior==9){
+        full_back();
+        sucess();
+        return 9;
+    }else if(prior==10){
+        full_back();
+        sucess();
+        return 10;
+    }else if(prior==11){
+        full_back();
+        sucess();
+        return 11;
+    }else{
+        fail();
+        return 0;
+    }
+}
+int S3(int q,char c){
+    if(q==0){
+        switch (c)
+        {
+        case '(':return 1;break;
+        case ')':return 2;break;
+        case '[':return 3;break;
+        case ']':return 4;break;
+        case '+':return 5;break;
+        case '-':return 6;break;
+        case '*':return 7;break;
+        case '/':return 8;break;
+        case ',':return 9;break;
+        case ';':return 10;break;
+        case ':':return 11;break;   
+        }
+        return udef;
+    }
+    return udef;
+}
+bool automaton_One_reserved_word(){
     if(get[0]==word1[0]){
         if(get[1]==word1[1]){
             if(get[2]==word1[2]){
@@ -476,7 +483,7 @@ bool reserved_word(){
     }
     
 }
-bool reserved_word1(){
+bool automaton_One_reserved_word1(){
     if(get[0]==word2[0]){
             if(get[1]==word2[1]){
                 if(get[2]==word2[2]){
@@ -515,7 +522,7 @@ bool reserved_word1(){
         return false;
     }
 }
-bool reserved_word2(){
+bool automaton_One_reserved_word2(){
     if(get[0]==word3[0]){
         if(get[1]==word3[1]){
             if(get[2]==word3[2]){
