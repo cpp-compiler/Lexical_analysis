@@ -9,13 +9,20 @@ int udef=-1;
 long q=0;
 long p=0;
 long f=0;
+bool eof=0;
 //long line=0;
 
 sequential next(){
+        
         if(wsp()){
+            printf("YES WHITE");
             
         }
-        //comments();
+        if(EOFF()){
+            return _eof;
+        }else{
+//comments();
+        
         if(automaton_One_id()==1){   
                 if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
                         clear_word();
@@ -65,18 +72,13 @@ sequential next(){
             return _semicolon;
         }else if(dp==11){
             return _colons;
-        }else{
-            return _err;
         }
-           
-            
-                 
-        if(EOFF()) return _eof;
-       
+        }
+
         return _err;
         
         
-        //EOFF();
+    
 }
 
 void word(){
@@ -92,7 +94,7 @@ void word(){
 /********************************************************************************************************/
 
 
-int read(){char wop;wop=fgetc(file_p);return wop;}
+int read(){return fgetc(file_p);}
 void open(const char* name){ file_p=fopen(name,"r");}
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){p=fseek(file_p,q,SEEK_SET);printf("\n{Activated fail %li}",p);}
@@ -111,11 +113,17 @@ bool EOFF(){
         return false;     
         }*/
     //}
-    if(read()==EOF){
-            printf("yes3");
+    if(eof==1){
         return true;
     }
     return false;
+
+    printf("EOF %c,",read());
+    /*if(read()==-1){
+            printf("yes3");
+        return true;
+    }
+    return false;*/
 }
 bool wsp(){
         while(isspace(read()));
@@ -151,7 +159,7 @@ int lines(){
 /********************************************************************************************************/
 
 int automaton_One_id(){
-    int actual=0,prior;
+    int actual=0,prior,priorr,priors;
     bool flag_a;
     char c;
     int a,b;
@@ -159,14 +167,32 @@ int automaton_One_id(){
     while(actual!=udef){
         prior=actual;
 	    c=read();
-
+        if(c==-1){
+            printf("YES");
+            
+            //fail()
+            //return 1;
+            
+       // return 1;
+            actual=-1;
+            prior=0;
+            priorr=3;
+            eof=1;
+        }
+        if(c==10){
+            actual=-1;
+            prior=0;
+            priorr=0;
+            eof=0;
+            priors=4;
+        }
         b=actual=S(actual,c);
         get[i]=c;
         get1[i]=c;
         i+=1;
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
-       //EOFF();
+       
        
        word();
     }
@@ -177,6 +203,16 @@ int automaton_One_id(){
         
        return 1;
          
+    }else if(priorr==3){
+       // prior=0;
+       full_back();
+        sucess();
+        
+       return 1;    
+    }else if(priors==4){
+           full_back();
+        sucess();
+        return 1;
     }else{
         fail();
         return 0;
@@ -217,21 +253,37 @@ int S(int q,char c){
 int automaton_Two_delta(){
     int len=length(get);
     printf("<lenght %i>",len);
-    int actual=0,prior;
+    int actual=0,prior,priorr,aux,priors,aux2;
     char c;
     int b;
     int i=0;
     while(actual!=udef){
         prior=actual;
 	    c=read();
-
+        if(c==-1){
+            printf("YES");
+            aux=prior;
+            //fail();
+            actual=-1;
+            prior=0;
+            priorr=3;
+            eof=1;
+        }
+        if(c==10){
+            aux2=prior;
+            actual=-1;
+            prior=0;
+            priorr=0;
+            eof=0;
+            priors=4;
+        }
         b=actual=S2(actual,c);
         get[i]=c;
         //get1[i]=c;
         i+=1;
        printf(" p%li and q%li",p,q);
        printf("\n<dc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
-       //EOFF();
+
        word();
        
     }
@@ -257,6 +309,29 @@ int automaton_Two_delta(){
        return 11;
         
         
+    }else if(priorr==3){
+       // prior=0;
+       switch (aux)
+       {
+       case 6:full_back(); sucess(); return 6;break;
+       case 5:full_back(); sucess(); return 4;break;
+       case 11:full_back(); sucess(); return 11;break;
+       case 7:full_back(); sucess(); return 11;break;
+       case 9:full_back(); sucess(); return 11;break;
+       
+       }
+           
+    }else if(priors==4){
+        switch (aux2)
+       {
+       case 6:full_back(); sucess(); return 6;break;
+       case 5:full_back(); sucess(); return 4;break;
+       case 11:full_back(); sucess(); return 11;break;
+       case 7:full_back(); sucess(); return 11;break;
+       case 9:full_back(); sucess(); return 11;break;
+       
+       }
+        full_back(); sucess();
     }else{
         fail();
         return 0;
@@ -361,7 +436,7 @@ int S2(int q,char c){
     }
 }
 int automaton_Three_delta_op(){
-     int actual=0,prior;
+     int actual=0,prior,priorr,aux,priors;
     bool flag_a;
     char c;
 
@@ -369,7 +444,22 @@ int automaton_Three_delta_op(){
     while(actual!=udef){
         prior=actual;
 	    c=read();
-
+        if(c==-1){
+            printf("YES");
+            aux=prior;
+            //fail();
+            actual=-1;
+            prior=0;
+            priorr=3;
+            eof=1;
+        }
+        if(c==10){
+            actual=-1;
+            prior=0;
+            priorr=0;
+            eof=0;
+            priors=4;
+        }
         actual=S3(actual,c);
         
        printf(" p%li and q%li",p,q);
@@ -422,6 +512,24 @@ int automaton_Three_delta_op(){
         full_back();
         sucess();
         return 11;
+    }else if(priorr==3){
+        switch (aux)
+        {
+        case 1:full_back(); sucess(); return 1;break;
+        case 2:full_back(); sucess(); return 2;break;
+        case 3:full_back(); sucess(); return 3;break;
+        case 4:full_back(); sucess(); return 4;break;
+        case 5:full_back(); sucess(); return 5;break;
+        case 6:full_back(); sucess(); return 6;break;
+        case 7:full_back(); sucess(); return 7;break;
+        case 8:full_back(); sucess(); return 8;break;
+        case 9:full_back(); sucess(); return 9;break;
+        case 10:full_back(); sucess(); return 10;break;
+        case 11:full_back(); sucess(); return 11;break;
+        
+        }
+    }else if(priors==4){
+        full_back(); sucess();
     }else{
         fail();
         return 0;

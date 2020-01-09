@@ -47,7 +47,7 @@ bool automaton_One_reserved_word();
 bool automaton_One_reserved_word1();
 bool automaton_One_reserved_word2();
 /*
-TASKS
+UNSOLVED TASKS
 message when the analysis had finished
 
 number of lines of the file
@@ -59,10 +59,13 @@ línea.
 11. Espacios en blanco
 Se contempla el uso de espacios, tabuladores y saltos de línea.
 
-12. La marca de fin de archivo ( EOF )
 
 token error
 	the carather and the line
+
+
+SOLVED
+12. La marca de fin de archivo ( EOF )
 
 */
 #endif

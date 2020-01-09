@@ -1,4 +1,5 @@
-helko 
-identity
-future 
-.
+word
+ 34
+ m
+
+ 
