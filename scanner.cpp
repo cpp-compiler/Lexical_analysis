@@ -10,6 +10,7 @@ long q=0;
 long p=0;
 long f=0;
 bool eof=0;
+bool eof1=0;
 //long line=0;
 
 sequential next(){
@@ -23,59 +24,56 @@ sequential next(){
         }else{
 //comments();
         
-        if(automaton_One_id()==1){   
-                if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
+            if(automaton_One_id()==1){   
+                    if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
+                            clear_word();
+                        return _resv_word;
+                    }else{
                         clear_word();
-                    return _resv_word;
-                }else{
-                    clear_word();
-                return _identifier;
-                }
-        }
-        int d=automaton_Two_delta();
-        if(d==6){
-            printf("S1");
-            return _oct;
-        }else if(d==4){
-            printf("S2");
-            return _hex;
-        }else if(d==11){
-            printf("S3");
-              return _rea;
-        }/*else{
-             // return _err;
-            
-        }*/
+                    return _identifier;
+                    }
+            }
+         /*   int d=automaton_Two_delta();
+            if(d==6){
+                printf("S1");
+                return _oct;
+            }else if(d==4){
+                printf("S2");
+                return _hex;
+            }else if(d==11){
+                printf("S3");
+                return _rea;
+            }
 
-            
-        int dp=automaton_Three_delta_op();
-        printf("\tDP %i",dp);
-        if(dp==1){
-            return _leftp;
-        }else if(dp==2){
-            return _rightp;
-        }else if(dp==3){
-            return _leftb;
-        }else if(dp==4){
-            return _rightb;
-        }else if(dp==5){
-            return _sum;
-        }else if(dp==6){
-            return _sub;
-        }else if(dp==7){
-            return _mult;
-        }else if(dp==8){
-            return _div;
-        }else if(dp==9){
-            return _coma;
-        }else if(dp==10){
-            return _semicolon;
-        }else if(dp==11){
-            return _colons;
-        }
+                
+            int dp=automaton_Three_delta_op();
+            printf("\tDP %i",dp);
+            if(dp==1){
+                return _leftp;
+            }else if(dp==2){
+                return _rightp;
+            }else if(dp==3){
+                return _leftb;
+            }else if(dp==4){
+                return _rightb;
+            }else if(dp==5){
+                return _sum;
+            }else if(dp==6){
+                return _sub;
+            }else if(dp==7){
+                return _mult;
+            }else if(dp==8){
+                return _div;
+            }else if(dp==9){
+                return _coma;
+            }else if(dp==10){
+                return _semicolon;
+            }else if(dp==11){
+                return _colons;
+            }*/
         }
 
-        return _err;
+       // return _err;
         
         
     
@@ -113,7 +111,7 @@ bool EOFF(){
         return false;     
         }*/
     //}
-    if(eof==1){
+    if(eof==1||eof1==1){
         return true;
     }
     return false;
@@ -159,7 +157,7 @@ int lines(){
 /********************************************************************************************************/
 
 int automaton_One_id(){
-    int actual=0,prior,priorr,priors;
+    int actual=0,prior,priorr,priors,prior_wsp;
     bool flag_a;
     char c;
     int a,b;
@@ -167,8 +165,14 @@ int automaton_One_id(){
     while(actual!=udef){
         prior=actual;
 	    c=read();
-        if(c==-1){
-            printf("YES");
+        b=actual=S(actual,c);
+        get[i]=c;
+        get1[i]=c;
+        i+=1;
+       printf(" p%li and q%li",p,q);
+       printf("\n<c[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+       if(c==-1){//eof
+            printf("YEs eof");
             
             //fail()
             //return 1;
@@ -179,20 +183,21 @@ int automaton_One_id(){
             priorr=3;
             eof=1;
         }
-        if(c==10){
+       if(c==10){//new line
+                printf("======new line====");
             actual=-1;
             prior=0;
             priorr=0;
             eof=0;
             priors=4;
         }
-        b=actual=S(actual,c);
-        get[i]=c;
-        get1[i]=c;
-        i+=1;
-       printf(" p%li and q%li",p,q);
-       printf("\n<c[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
-       
+        if(c==32){
+                printf("======SPACE====");
+            //eof=1;
+            prior_wsp=1;
+
+           // wsp();
+        }
        
        word();
     }
@@ -213,7 +218,11 @@ int automaton_One_id(){
            full_back();
         sucess();
         return 1;
+    }else if(prior_wsp==1){
+           //printf("===white====");
+            eof1=1;
     }else{
+        printf("ACTIVATED FAIL A1");
         fail();
         return 0;
     }
