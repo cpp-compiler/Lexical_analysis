@@ -33,7 +33,7 @@ sequential next(){
                     return _identifier;
                     }
             }
-         /*   int d=automaton_Two_delta();
+            int d=automaton_Two_delta();
             if(d==6){
                 printf("S1");
                 return _oct;
@@ -47,30 +47,38 @@ sequential next(){
 
                 
             int dp=automaton_Three_delta_op();
-            printf("\tDP %i",dp);
-            if(dp==1){
-                return _leftp;
-            }else if(dp==2){
-                return _rightp;
-            }else if(dp==3){
-                return _leftb;
-            }else if(dp==4){
-                return _rightb;
-            }else if(dp==5){
-                return _sum;
-            }else if(dp==6){
-                return _sub;
-            }else if(dp==7){
-                return _mult;
-            }else if(dp==8){
-                return _div;
-            }else if(dp==9){
-                return _coma;
-            }else if(dp==10){
-                return _semicolon;
-            }else if(dp==11){
-                return _colons;
-            }*/
+           // printf("\tDP %i",dp);
+            if (dp>=1 && dp<=11)
+            {
+                if(dp==1){
+                    return _leftp;
+                }else if(dp==2){
+                    return _rightp;
+                }else if(dp==3){
+                    return _leftb;
+                }else if(dp==4){
+                    return _rightb;
+                }else if(dp==5){
+                    return _sum;
+                }else if(dp==6){
+                    return _sub;
+                }else if(dp==7){
+                    return _mult;
+                }else if(dp==8){
+                    return _div;
+                }else if(dp==9){
+                    return _coma;
+                }else if(dp==10){
+                    return _semicolon;
+                }else if(dp==11){
+                    return _colons;
+                }
+                printf("###########YES########");
+            }else{
+             //   printf("###########NOP########");
+            }
+            
+            
         }
 
        // return _err;
@@ -172,7 +180,7 @@ int automaton_One_id(){
        printf(" p%li and q%li",p,q);
        printf("\n<c[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
        if(c==-1){//eof
-            printf("YEs eof");
+            printf("YEs eof A1");
             
             //fail()
             //return 1;
@@ -192,7 +200,7 @@ int automaton_One_id(){
             priors=4;
         }
         if(c==32){
-                printf("======SPACE====");
+                printf("====A1==SPACE====");
             //eof=1;
             prior_wsp=1;
 
@@ -270,7 +278,7 @@ int automaton_Two_delta(){
         prior=actual;
 	    c=read();
         if(c==-1){
-            printf("YES");
+            printf(" A2 YES EOF ");
             aux=prior;
             //fail();
             actual=-1;
@@ -342,6 +350,7 @@ int automaton_Two_delta(){
        }
         full_back(); sucess();
     }else{
+        printf("ACTIVATED FAIL A2");
         fail();
         return 0;
     }
@@ -445,7 +454,7 @@ int S2(int q,char c){
     }
 }
 int automaton_Three_delta_op(){
-     int actual=0,prior,priorr,aux,priors;
+     int actual=0,prior,priorr,aux,priors,aux2;
     bool flag_a;
     char c;
 
@@ -454,7 +463,7 @@ int automaton_Three_delta_op(){
         prior=actual;
 	    c=read();
         if(c==-1){
-            printf("YES");
+            printf("A3 YES EOF");
             aux=prior;
             //fail();
             actual=-1;
@@ -463,11 +472,19 @@ int automaton_Three_delta_op(){
             eof=1;
         }
         if(c==10){
+            aux2=prior;
             actual=-1;
             prior=0;
             priorr=0;
             eof=0;
             priors=4;
+        }
+        if(c==32){
+                printf("=====A3=SPACE====");
+            //eof=1;
+          //  prior_wsp=1;
+
+           // wsp();
         }
         actual=S3(actual,c);
         
@@ -477,50 +494,17 @@ int automaton_Three_delta_op(){
     }
        
     
-    if(prior==1){
-        full_back();
-        sucess();
-        return 1;
-    }else if(prior==2){
-        full_back();
-        sucess();
-        return 2;
-    }else if(prior==3){
-        full_back();
-        sucess();
-        return 3;
-    }else if(prior==4){
-        full_back();
-        sucess();
-        return 4;
-    }else if(prior==5){
-        full_back();
-        sucess();
-        return 5;
-    }else if(prior==6){
-        full_back();
-        sucess();
-        return 6;
-    }else if(prior==7){
-        full_back();
-        sucess();
-        return 7;
-    }else if(prior==8){
-        full_back();
-        sucess();
-        return 8;
-    }else if(prior==9){
-        full_back();
-        sucess();
-        return 9;
-    }else if(prior==10){
-        full_back();
-        sucess();
-        return 10;
-    }else if(prior==11){
-        full_back();
-        sucess();
-        return 11;
+    if(prior==1){       full_back(); sucess(); return 1;
+    }else if(prior==2){ full_back(); sucess(); return 2;
+    }else if(prior==3){ full_back(); sucess(); return 3;
+    }else if(prior==4){ full_back(); sucess(); return 4;
+    }else if(prior==5){ full_back(); sucess(); return 5;
+    }else if(prior==6){ full_back(); sucess(); return 6;
+    }else if(prior==7){ full_back(); sucess(); return 7;
+    }else if(prior==8){ full_back(); sucess(); return 8;
+    }else if(prior==9){ full_back(); sucess(); return 9;
+    }else if(prior==10){full_back(); sucess(); return 10;
+    }else if(prior==11){full_back(); sucess(); return 11;
     }else if(priorr==3){
         switch (aux)
         {
@@ -538,8 +522,24 @@ int automaton_Three_delta_op(){
         
         }
     }else if(priors==4){
-        full_back(); sucess();
+        switch (aux2)
+        {
+        case 1:full_back(); sucess(); return 1;break;
+        case 2:full_back(); sucess(); return 2;break;
+        case 3:full_back(); sucess(); return 3;break;
+        case 4:full_back(); sucess(); return 4;break;
+        case 5:full_back(); sucess(); return 5;break;
+        case 6:full_back(); sucess(); return 6;break;
+        case 7:full_back(); sucess(); return 7;break;
+        case 8:full_back(); sucess(); return 8;break;
+        case 9:full_back(); sucess(); return 9;break;
+        case 10:full_back(); sucess(); return 10;break;
+        case 11:full_back(); sucess(); return 11;break;
+        
+        }
+        //full_back(); sucess();
     }else{
+        printf("ACTIVATED FAIL A3");
         fail();
         return 0;
     }
