@@ -11,7 +11,8 @@ long p=0;
 long f=0;
 bool eof=0;
 bool eof1=0;
-//long line=0;
+bool eof2=0;
+long line=0;
 
 sequential next(){
         
@@ -23,7 +24,7 @@ sequential next(){
             return _eof;
         }else{
 //comments();
-        
+           
             if(automaton_One_id()==1){   
                     if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
                             clear_word();
@@ -73,14 +74,14 @@ sequential next(){
                 }else if(dp==11){
                     return _colons;
                 }
-                printf("###########YES########");
+               // printf("###########YES########");
             }else{
              //   printf("###########NOP########");
             }
             
             
         }
-
+            
        // return _err;
         
         
@@ -100,7 +101,14 @@ void word(){
 /********************************************************************************************************/
 
 
-int read(){return fgetc(file_p);}
+int read(){
+    int w;
+    w=fgetc(file_p);
+    if(w==10){
+        lines();
+        printf("=================(YES)==============");
+    }
+    return w;}
 void open(const char* name){ file_p=fopen(name,"r");}
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
 void fail(){p=fseek(file_p,q,SEEK_SET);printf("\n{Activated fail %li}",p);}
@@ -151,15 +159,14 @@ int length(char c[]){
         i++;
     }
     return i;
-}/*
+}
 int lines(){
-    while (read()==10)
-    {
-        line++;
-    }
-    return line;
     
-}*/
+     return line++;
+    
+   
+    
+}
 /********************************************************************************************************/
 /********************************************************************************************************/
 /********************************************************************************************************/
@@ -192,7 +199,7 @@ int automaton_One_id(){
             eof=1;
         }
        if(c==10){//new line
-                printf("======new line====");
+                printf("=====A1 =new line====");
             actual=-1;
             prior=0;
             priorr=0;
@@ -278,15 +285,18 @@ int automaton_Two_delta(){
         prior=actual;
 	    c=read();
         if(c==-1){
+            
+            eof=1;
             printf(" A2 YES EOF ");
             aux=prior;
             //fail();
             actual=-1;
             prior=0;
             priorr=3;
-            eof=1;
+            
         }
         if(c==10){
+            printf("=====A2 =new line====");
             aux2=prior;
             actual=-1;
             prior=0;
@@ -472,6 +482,7 @@ int automaton_Three_delta_op(){
             eof=1;
         }
         if(c==10){
+            printf("=====A3=new line====");
             aux2=prior;
             actual=-1;
             prior=0;

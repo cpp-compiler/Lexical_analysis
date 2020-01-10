@@ -50,23 +50,18 @@ bool automaton_One_reserved_word2();
 UNSOLVED TASKS
 message when the analysis had finished
 
-number of lines of the file
-
 6. Comentarios
 Un comentario es cualquier secuencia de caracteres que inicia con la marca # (hash) y termina con el fin de
 línea.
 
-11. Espacios en blanco
-Se contempla el uso de espacios, tabuladores y saltos de línea.
-
-
 token error
 	the carather and the line
 
-
 SOLVED
+number of lines of the file
+11. Espacios en blanco
+Se contempla el uso de espacios, tabuladores y saltos de línea.
 12. La marca de fin de archivo ( EOF )
-
 */
 #endif
 

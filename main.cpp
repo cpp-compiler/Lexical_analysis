@@ -8,7 +8,7 @@ int main(){
             tokenn=next();
             switch(tokenn){
                 case 0: printf("Identificator");break;
-                case 1: printf("EOF");break;
+                case 1: printf("EOF");printf("==========Total Lines: %i========= ",lines()-1);break;
                 case 2: printf("ERR");/*printf("error: %i ",line());*/break;
                 case 3: printf("Reserved word");break;
                 case 4: printf("Octal number"); break;
