@@ -31,6 +31,9 @@ int S3(int,char);
 int automaton_Four_comments();
 int S4(int,char);
 
+int tokenError();
+int S5(int,char);
+
 int length(char[]);
 
 int compare(char[]);
@@ -50,10 +53,11 @@ bool automaton_One_reserved_word2();
 UNSOLVED TASKS
 message when the analysis had finished
 
+
+SOLVED
 token error
 	the carather and the line
 
-SOLVED
 number of lines of the file
 11. Espacios en blanco
 Se contempla el uso de espacios, tabuladores y saltos de línea.

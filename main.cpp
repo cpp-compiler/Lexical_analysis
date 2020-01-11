@@ -8,8 +8,8 @@ int main(){
             tokenn=next();
             switch(tokenn){
                 case 0: printf("Identificator");break;
-                case 1: printf("EOF");printf("==========Total Lines: %i========= ",lines());break;
-                case 2: printf("ERR");/*printf("error: %i ",line());*/break;
+                case 1: printf("EOF \n\nThe analysis had finished.");printf("\n==========Total Lines: %i========= ",lines());break;
+                case 2: printf("ERR");printf("Error in line : %i ",lines());break;
                 case 3: printf("Reserved word");break;
                 case 4: printf("Octal number"); break;
                 case 5: printf("Hexadecimal"); break;

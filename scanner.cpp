@@ -23,7 +23,9 @@ sequential next(){
         if(EOFF()){
             return _eof;
         }else{
-            
+            if(tokenError()==0){
+                return _err;
+            } 
             if(automaton_One_id()==1){   
                     if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
                             clear_word();
@@ -81,8 +83,10 @@ sequential next(){
                 printf("comments");
                 return _comment;
             }
-            
-         
+           
+           // printf("\tDP %i",dp);
+           
+           
             
             
             
@@ -190,7 +194,7 @@ int automaton_One_id(){
         get1[i]=c;
         i+=1;
        printf(" p%li and q%li",p,q);
-       printf("\n<c[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+       printf("\n<A1 c[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
        if(c==-1){//eof
             printf("YEs eof A1");
             
@@ -314,7 +318,7 @@ int automaton_Two_delta(){
         //get1[i]=c;
         i+=1;
        printf(" p%li and q%li",p,q);
-       printf("\n<dc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+       printf("\n<A2 dc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
 
        word();
        
@@ -505,7 +509,7 @@ int automaton_Three_delta_op(){
         actual=S3(actual,c);
         
        printf(" p%li and q%li",p,q);
-       printf("\n<dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+       printf("\n<A3 dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
       
     }
        
@@ -620,6 +624,7 @@ int automaton_Four_comments(){
         fail();
         return 0;
     }  
+
 }
 int S4(int q,char c){
     switch (q)
@@ -648,6 +653,36 @@ int S4(int q,char c){
         return 2;
         break;
     }
+}
+int tokenError(){
+      int actual=0,prior,priorr,aux,priors,aux2;
+    bool flag_a;
+    char c;
+
+    int i=0;
+    while(actual!=udef){
+        prior=actual;
+	    c=read();
+        if((c>=47 && c<=59) || (c>=40 && c<=45) || (c>=65 && c<=90) || (c>=97 && c<=122)|| (c==39)||(c==35)){
+           full_back();
+           sucess();
+        }else{
+            priorr=3;
+        }
+        actual=-1;
+        
+           printf(" p%li and q%li",p,q);
+        printf("\n<A5 dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+      
+    }
+       
+    
+     if(priorr==3){
+        printf("ACTIVATED FAIL A5");
+        fail();
+        return 0;
+    }
+    
 }
 bool automaton_One_reserved_word(){
     if(get[0]==word1[0]){
