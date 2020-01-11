@@ -8,7 +8,7 @@ int main(){
             tokenn=next();
             switch(tokenn){
                 case 0: printf("Identificator");break;
-                case 1: printf("EOF");printf("==========Total Lines: %i========= ",lines()-1);break;
+                case 1: printf("EOF");printf("==========Total Lines: %i========= ",lines());break;
                 case 2: printf("ERR");/*printf("error: %i ",line());*/break;
                 case 3: printf("Reserved word");break;
                 case 4: printf("Octal number"); break;
@@ -25,6 +25,7 @@ int main(){
                 case 15: printf("Puntuation sign comma");break;
                 case 16: printf("Puntuation sign semicolon"); break;
                 case 17: printf("Assign operator colon"); break;
+                case 18: /*printf("comments");*/ break;
                 /*case 1: printf("Identificator");break;
                 case 2: printf("Reserved word");break;
                 

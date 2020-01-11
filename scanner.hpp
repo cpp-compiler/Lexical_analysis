@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 //FUNCTIONS
-typedef enum{_identifier,_eof,_err,_resv_word,_oct,_hex,_rea,_leftp,_rightp,_leftb,_rightb,_sum,_sub,_mult,_div,_coma,_semicolon,_colons} sequential;
+typedef enum{_identifier,_eof,_err,_resv_word,_oct,_hex,_rea,_leftp,_rightp,_leftb,_rightb,_sum,_sub,_mult,_div,_coma,_semicolon,_colons,_comment} sequential;
 sequential next();
 
 /////////////
@@ -28,7 +28,7 @@ int S2(int,char);
 int automaton_Three_delta_op();
 int S3(int,char);
 
-int automaton_Four_wspeof();
+int automaton_Four_comments();
 int S4(int,char);
 
 int length(char[]);
@@ -50,10 +50,6 @@ bool automaton_One_reserved_word2();
 UNSOLVED TASKS
 message when the analysis had finished
 
-6. Comentarios
-Un comentario es cualquier secuencia de caracteres que inicia con la marca # (hash) y termina con el fin de
-línea.
-
 token error
 	the carather and the line
 
@@ -62,6 +58,9 @@ number of lines of the file
 11. Espacios en blanco
 Se contempla el uso de espacios, tabuladores y saltos de línea.
 12. La marca de fin de archivo ( EOF )
+6. Comentarios
+Un comentario es cualquier secuencia de caracteres que inicia con la marca # (hash) y termina con el fin de
+línea.
 */
 #endif
 

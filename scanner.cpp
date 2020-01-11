@@ -23,8 +23,7 @@ sequential next(){
         if(EOFF()){
             return _eof;
         }else{
-//comments();
-           
+            
             if(automaton_One_id()==1){   
                     if(automaton_One_reserved_word()||automaton_One_reserved_word1()||automaton_One_reserved_word2()){
                             clear_word();
@@ -78,9 +77,17 @@ sequential next(){
             }else{
              //   printf("###########NOP########");
             }
+           if(automaton_Four_comments()==1){
+                printf("comments");
+                return _comment;
+            }
+            
+         
+            
             
             
         }
+
             
        // return _err;
         
@@ -108,6 +115,8 @@ int read(){
         lines();
         printf("=================(YES)==============");
     }
+    
+    
     return w;}
 void open(const char* name){ file_p=fopen(name,"r");}
 void sucess(){ q=ftell((file_p)); printf("\n{Activated sucess %li}",q);}
@@ -161,11 +170,7 @@ int length(char c[]){
     return i;
 }
 int lines(){
-    
      return line++;
-    
-   
-    
 }
 /********************************************************************************************************/
 /********************************************************************************************************/
@@ -574,6 +579,75 @@ int S3(int q,char c){
         return udef;
     }
     return udef;
+}
+int automaton_Four_comments(){
+    int actual=0,prior,prior_a,go_to;
+    char c;
+    int a;
+    int i=0;
+    while(actual!=udef){
+        prior=actual;
+	    c=read();
+       if(c==-1){
+            printf("YES  EOF A4");
+            actual=-1;
+            //prior=0;
+            eof=1;
+            go_to=1;
+        }
+        actual=S4(actual,c);
+        if(prior==2){//this conditional is for stop the algorithm
+            actual=-1;
+            //printf("STOP");
+        }
+       printf(" p%li and q%li",p,q);
+       printf("\n<A4 dpc[%c][%i] prior[%i] actual[%i]>",c,c,prior,actual);
+       
+    }
+  
+    if(prior==2){
+        full_back();
+        sucess();
+        
+       return 1;
+         
+    }else if(go_to==1){
+        full_back();
+        sucess();
+        return 1;
+    }else{
+        printf("ACTIVATED FAIL A4");
+        fail();
+        return 0;
+    }  
+}
+int S4(int q,char c){
+    switch (q)
+    {
+    case 0:
+        if(c==35){
+            return 1;
+        }else{
+            return udef;
+        }
+        break;
+    case 1:
+        if(c>=32 && c<=254){
+           // printf("comment");
+            return 1;
+        }else if(c==10){
+           // printf("change");
+            return 2;
+        }else
+        {
+            return udef;
+        }
+        
+        break;
+    case 2:
+        return 2;
+        break;
+    }
 }
 bool automaton_One_reserved_word(){
     if(get[0]==word1[0]){
